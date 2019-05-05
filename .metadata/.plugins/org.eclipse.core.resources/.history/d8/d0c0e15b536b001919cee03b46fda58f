@@ -1,0 +1,54 @@
+import java.awt.EventQueue;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import java.awt.Panel;
+import java.awt.Canvas;
+import java.awt.Label;
+
+public class The_Reader {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					The_Reader window = new The_Reader();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public The_Reader() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 628, 429);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel label = new JLabel("");
+		Image img= new ImageIcon(this.getClass().getResource("/logo.jpg")).getImage();
+		Label.setIcon(new ImageIcon(img));
+		label.setBounds(10, 10, 205, 85);
+		frame.getContentPane().add(label);
+	}
+}

@@ -1,7 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Image;
 
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -19,9 +21,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JInternalFrame;
 
 public class UserProfile extends JFrame {
+	
+
 
 	private JPanel contentPane;
 
@@ -40,11 +45,69 @@ public class UserProfile extends JFrame {
 			}
 		});
 	}
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void Display_friends(User u) // function that takes a user and display Names and books of the friends
+    {
+    	JFrame frame = new JFrame("Friends");  
+        JPanel panel = new JPanel();  
+        panel.setLayout(new FlowLayout());  
+        JLabel label = new JLabel("My Friends  "); 
+        panel.add(label);  
+      // panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        for(int i=0;i<u.Following.size();i++)
+ 	   {
+ 		    JTextField textField = new JTextField(u.Following.get(i).Name);
+ 		    panel.add(textField);
+ 		    for(int j=0;j<u.Following.get(i).Read_publications.size();j++)
+ 		    {
+ 		    	JTextField textField_2 = new JTextField(u.Following.get(i).Read_publications.get(j).Name);
+ 		    	panel.add(textField_2);
+ 		    }
+ 	   }
+        frame.getContentPane().add(panel);  
+        frame.setSize(200, 300);  
+        frame.setLocationRelativeTo(null);  
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+        frame.setVisible(true);  
+    }
+    
+ //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public void Display_Read_Publicatons(User u) // function that takes a user and display Publications Read By the User
+{
+	JFrame frame = new JFrame("Publications");  
+	JPanel panel = new JPanel();  
+	panel.setLayout(new FlowLayout());  
+	JLabel label = new JLabel("My Publications  "); 
+	panel.add(label);  
+	// panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+	for(int i=0;i<u.Read_publications.size();i++)
+	{
+		 JTextField textField = new JTextField(u.Read_publications.get(i).Name);
+		 panel.add(textField);
+		 JTextField textField_2 = new JTextField(u.Read_publications.get(i).Description);
+		 panel.add(textField_2);
+		
+	}
+		frame.getContentPane().add(panel);  
+		frame.setSize(200, 300);  
+		frame.setLocationRelativeTo(null);  
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+		frame.setVisible(true);  
+}
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Create the frame.
 	 */
+    //////////dummy data for testing ///////////
+	User u=new User("Ahmed","Ahmd","1234");
+	User u2=new User("Mohammed","m7md","12345");
+	User u3=new User("Emad","E123","12345");
+	/////////////////////////////////////////////
 	public UserProfile() {
+		u.Following.add(u2);
+		u.Following.add(u3);
 		User U1= new User("Ahmed","Ahmed_123","12345");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 867, 520);
@@ -61,18 +124,27 @@ public class UserProfile extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Home");
-		btnNewButton.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
-		btnNewButton.setBounds(212, 70, 115, 33);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Home h=new Home();
+				h.setVisible(true);
+			}
+		});
+		btnNewButton.setForeground(Color.DARK_GRAY);
+		btnNewButton.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
+		btnNewButton.setBounds(214, 82, 115, 33);
 		btnNewButton.setOpaque(false);
 		btnNewButton.setContentAreaFilled(false);
 		btnNewButton.setBorderPainted(false);
 		contentPane.add(btnNewButton);
 		
 		JButton btnMyBooks = new JButton("My Books");
+		btnMyBooks.setForeground(Color.DARK_GRAY);
 		btnMyBooks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				 DefaultListModel<String> l1 = new DefaultListModel<>();  
+				Display_Read_Publicatons(u);
+				/* DefaultListModel<String> l1 = new DefaultListModel<>();  
 		          l1.addElement("The Secret");  
 		          l1.addElement("History Of Egypt");
 		          l1.addElement("The Fault In Our Stars");
@@ -91,35 +163,52 @@ public class UserProfile extends JFrame {
 			        f.getContentPane().add(panel);  
 			                f.setSize(400,400);    
 			                f.getContentPane().setLayout(null);    
-			                f.setVisible(true);    
+			                f.setVisible(true);  */  
 			}
 		});
-		btnMyBooks.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
+		btnMyBooks.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
 		btnMyBooks.setOpaque(false);
 		btnMyBooks.setContentAreaFilled(false);
 		btnMyBooks.setBorderPainted(false);
-		btnMyBooks.setBounds(295, 67, 140, 39);
+		btnMyBooks.setBounds(300, 79, 140, 39);
 		contentPane.add(btnMyBooks);
 		
 		JButton btnFindBooks = new JButton("Find Books");
-		btnFindBooks.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
+		btnFindBooks.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				
+			}
+		});
+		btnFindBooks.setForeground(Color.DARK_GRAY);
+		btnFindBooks.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
 		btnFindBooks.setOpaque(false);
 		btnFindBooks.setContentAreaFilled(false);
 		btnFindBooks.setBorderPainted(false);
-		btnFindBooks.setBounds(409, 67, 150, 39);
+		btnFindBooks.setBounds(410, 79, 150, 39);
 		contentPane.add(btnFindBooks);
 		
 		JButton btnFriends = new JButton("Friends");
-		btnFriends.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
+		btnFriends.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				 
+				Display_friends(u);
+			}
+		});
+		btnFriends.setForeground(Color.DARK_GRAY);
+		btnFriends.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
 		btnFriends.setOpaque(false);
 		btnFriends.setContentAreaFilled(false);
 		btnFriends.setBorderPainted(false);
-		btnFriends.setBounds(519, 65, 140, 42);
+		btnFriends.setBounds(518, 77, 140, 42);
 		contentPane.add(btnFriends);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.setForeground(Color.DARK_GRAY);
 		comboBox .setOpaque(false);
 		comboBox.addItem("Explore");
+		comboBox.addItem("None");
 		 comboBox.addItem("Action and adventure");  
 		 comboBox.addItem("Art");  
 		 comboBox.addItem("Drama");  
@@ -131,24 +220,27 @@ public class UserProfile extends JFrame {
 		 comboBox.addItem("Romance");
 		 comboBox.addItem("History");
 		comboBox .setEditable(true);
-		comboBox.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
-		comboBox.setBounds(646, 70, 195, 32);
+		comboBox.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
+		comboBox.setBounds(646, 82, 195, 32);
 		contentPane.add(comboBox);
 		
 		JLabel welcomelabel = new JLabel("Welcome  " + U1.Name);
-		welcomelabel.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		welcomelabel.setForeground(Color.DARK_GRAY);
+		welcomelabel.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		welcomelabel.setBounds(10, 125, 150, 33);
 		contentPane.add(welcomelabel);
 		
 		JButton btnNewButton_1 = new JButton("Inbox");
+		btnNewButton_1.setForeground(Color.DARK_GRAY);
 		btnNewButton_1.setOpaque(false);
 		btnNewButton_1.setContentAreaFilled(false);
 		btnNewButton_1.setBorderPainted(false);
-		btnNewButton_1.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		btnNewButton_1.setBounds(22, 184, 99, 42);
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnSignout = new JButton("Sign Out");
+		btnSignout.setForeground(Color.DARK_GRAY);
 		btnSignout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{   
@@ -160,17 +252,43 @@ public class UserProfile extends JFrame {
 		btnSignout.setOpaque(false);
 		btnSignout.setContentAreaFilled(false);
 		btnSignout.setBorderPainted(false);
-		btnSignout.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnSignout.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		btnSignout.setBounds(10, 256, 123, 39);
 		contentPane.add(btnSignout);
 		
 		JButton btnNewButton_2 = new JButton("Go !");
+		btnNewButton_2.setForeground(Color.DARK_GRAY);
 		btnNewButton_2.setOpaque(false);
 		btnNewButton_2.setContentAreaFilled(false);
 		btnNewButton_2.setBorderPainted(false);
-		btnNewButton_2.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
+		btnNewButton_2.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
 		btnNewButton_2.setBounds(742, 113, 99, 33);
 		contentPane.add(btnNewButton_2);
+		
+		JButton btnNoti ;
+		btnNoti = new JButton();
+		btnNoti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/notify2.jpg")));
+		btnNoti.setBorderPainted(false);
+		btnNoti.setFocusPainted(false);
+		btnNoti.setContentAreaFilled(false);
+		btnNoti.setBounds(772, 0, 79, 80);
+		contentPane.add(btnNoti);
+		
+		JButton newsfeed = new JButton("");
+		newsfeed.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+				NewsFeed news=new NewsFeed();
+				news.setVisible(true);
+			}
+		});
+		newsfeed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/newsfeed.jpg")));
+		newsfeed.setBorderPainted(false);
+		newsfeed.setFocusPainted(false);
+		newsfeed.setContentAreaFilled(false);
+		newsfeed.setBounds(687, 0, 93, 71);
+		contentPane.add(newsfeed);
+		Image imgage= new ImageIcon(this.getClass().getResource("/bookshelf.jpg")).getImage();
 		
 		
 		

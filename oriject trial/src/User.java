@@ -9,6 +9,7 @@ public class User
 	ArrayList<User>Followers;
 	ArrayList<User>Following;
 	ArrayList<String>interests;
+	ArrayList<Publication>Read_publications;
 	
 	public User(String name , String username, String password)
 	{
@@ -18,6 +19,7 @@ public class User
 		Followers=new ArrayList<User>();
 		Following=new ArrayList<User>();
 		interests=new ArrayList<String>();
+		Read_publications=new ArrayList<Publication>();
 	}
 	public void AddFollower(User u)
 	{

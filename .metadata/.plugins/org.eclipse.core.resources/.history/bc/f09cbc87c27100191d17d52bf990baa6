@@ -1,0 +1,9 @@
+
+public class FollowersNotification extends Notification
+{
+    User Follower;
+    public void onclick()
+    {
+    	
+    }
+}

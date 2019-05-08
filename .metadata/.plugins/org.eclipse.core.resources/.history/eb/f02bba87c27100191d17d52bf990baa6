@@ -1,0 +1,10 @@
+
+public class CategoryNotification extends Notification 
+{
+    abstractCategory category;
+    Publication publication;
+    public void onclick()
+    {
+    	
+    }
+}

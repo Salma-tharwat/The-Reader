@@ -1,0 +1,52 @@
+import java.util.ArrayList;
+
+public class User
+{
+	String Name;
+	String UserName;
+	String Password;
+	
+	ArrayList<User>Followers;
+	
+	ArrayList<abstractCategory>interests;
+	ArrayList<Notification>Notifications;
+	ArrayList<Publication>Read_publications;
+	ArrayList<Article>Created_Articles;
+	public User(String name , String username, String password)
+	{
+		Name=name;
+		UserName=username;
+		Password=password;
+		Followers=new ArrayList<User>();
+		Notifications=new ArrayList();
+		interests=new ArrayList<abstractCategory>();
+		Read_publications=new ArrayList<Publication>();
+		Created_Articles=new ArrayList<Article>();
+	}
+	public void AddFollower(User u)
+	{
+		Followers.add(u);
+	}
+	public void RemoveFollower(User u)
+	{
+		Followers.remove(u);
+	}
+	
+	private void NotifyFollowers(Notification n)
+	{
+		
+	}
+	public void Notify (Notification n)
+	{
+		
+	}
+	public void  ReadBook(Book b)
+	{
+		
+	}
+
+
+
+
+
+}

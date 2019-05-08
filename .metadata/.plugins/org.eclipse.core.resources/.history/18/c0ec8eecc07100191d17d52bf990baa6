@@ -1,0 +1,11 @@
+
+public class Reply extends AbstractComment
+{
+
+	@Override
+	public void Notify() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

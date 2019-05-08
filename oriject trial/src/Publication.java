@@ -1,41 +1,42 @@
 import java.sql.Date;
 import java.util.ArrayList;
 
-public class Publication 
+public abstract class Publication 
 {
 	String Name;
-	Publisher publisher;
-	ArrayList<User>read_users;
-	ArrayList<String>categories;
-	Date Date_published;
-	ArrayList<Review> Reviews;
-	String Description;
-	Addition_Strategy Publication_addition_Strategy;
+	ArrayList<User>followers;
+	ArrayList<abstractCategory>categories;
+	java.util.Date Date_published;
+	ArrayList<Comment>Comments;
+	
+	
 
-	public Publication(String n ,Publisher p ,Date date ,ArrayList<String>categories,String desc)
+	public Publication(String n  ,java.util.Date d ,ArrayList<abstractCategory> arrayList)
 	{
 		Name=n;
-		publisher=p;
-		read_users=new ArrayList<User>();
-		categories=new ArrayList<String>();
-		Date_published=date;
-		Reviews=new ArrayList<Review>();
-		Description=desc;
+		followers=new ArrayList<User>();
+		categories=arrayList;
+		Date_published=d;
+		Comments=new ArrayList<Comment>();
+		
 		
 	}
 	public void AddUser(User u)
 	{
-		read_users.add(u);
+		followers.add(u);
 	}
-	public void AddReview(Review r)
+	public void AddReview(Comment r)
 	{
-		Reviews.add(r);
+		Comments.add(r);
 	}
-	public void setAddition_strategy(Addition_Strategy a)
+	public void Remove_Follower(User u)
 	{
-		
+		followers.remove(u);
 	}
-
-
-
+    public void isFollowing(User u)
+    {
+    	
+    }
+   public  abstract void NotifyFollowers();
+   public abstract void Render();
 }

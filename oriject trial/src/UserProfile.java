@@ -54,13 +54,13 @@ public class UserProfile extends JFrame {
         JLabel label = new JLabel("My Friends  "); 
         panel.add(label);  
       // panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        for(int i=0;i<u.Following.size();i++)
+        for(int i=0;i<u.Followers.size();i++)
  	   {
- 		    JTextField textField = new JTextField(u.Following.get(i).Name);
+ 		    JTextField textField = new JTextField(u.Followers.get(i).Name);
  		    panel.add(textField);
- 		    for(int j=0;j<u.Following.get(i).Read_publications.size();j++)
+ 		    for(int j=0;j<u.Followers.get(i).Read_Books.size();j++)
  		    {
- 		    	JTextField textField_2 = new JTextField(u.Following.get(i).Read_publications.get(j).Name);
+ 		    	JTextField textField_2 = new JTextField(u.Followers.get(i).Read_Books.get(j).Name);
  		    	panel.add(textField_2);
  		    }
  	   }
@@ -73,7 +73,7 @@ public class UserProfile extends JFrame {
     
  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-public void Display_Read_Publicatons(User u) // function that takes a user and display Publications Read By the User
+public void Display_Read_Books(User u) // function that takes a user and display Publications Read By the User
 {
 	JFrame frame = new JFrame("Publications");  
 	JPanel panel = new JPanel();  
@@ -81,11 +81,11 @@ public void Display_Read_Publicatons(User u) // function that takes a user and d
 	JLabel label = new JLabel("My Publications  "); 
 	panel.add(label);  
 	// panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	for(int i=0;i<u.Read_publications.size();i++)
+	for(int i=0;i<u.Read_Books.size();i++)
 	{
-		 JTextField textField = new JTextField(u.Read_publications.get(i).Name);
+		 JTextField textField = new JTextField(u.Read_Books.get(i).Name);
 		 panel.add(textField);
-		 JTextField textField_2 = new JTextField(u.Read_publications.get(i).Description);
+		 JTextField textField_2 = new JTextField(u.Read_Books.get(i).Description);
 		 panel.add(textField_2);
 		
 	}
@@ -104,10 +104,11 @@ public void Display_Read_Publicatons(User u) // function that takes a user and d
 	User u=new User("Ahmed","Ahmd","1234");
 	User u2=new User("Mohammed","m7md","12345");
 	User u3=new User("Emad","E123","12345");
+	
 	/////////////////////////////////////////////
 	public UserProfile() {
-		u.Following.add(u2);
-		u.Following.add(u3);
+		u.Followers.add(u2);
+		u.Followers.add(u3);
 		User U1= new User("Ahmed","Ahmed_123","12345");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 867, 520);
@@ -143,7 +144,7 @@ public void Display_Read_Publicatons(User u) // function that takes a user and d
 		btnMyBooks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				Display_Read_Publicatons(u);
+				Display_Read_Books(u);
 				/* DefaultListModel<String> l1 = new DefaultListModel<>();  
 		          l1.addElement("The Secret");  
 		          l1.addElement("History Of Egypt");
@@ -267,6 +268,10 @@ public void Display_Read_Publicatons(User u) // function that takes a user and d
 		
 		JButton btnNoti ;
 		btnNoti = new JButton();
+		btnNoti.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnNoti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/notify2.jpg")));
 		btnNoti.setBorderPainted(false);
 		btnNoti.setFocusPainted(false);

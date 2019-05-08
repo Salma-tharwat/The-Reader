@@ -1,0 +1,7 @@
+
+public class Notification
+{
+   String Message;
+   User user;
+   
+}

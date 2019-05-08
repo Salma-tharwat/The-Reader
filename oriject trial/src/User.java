@@ -7,19 +7,21 @@ public class User
 	String Password;
 	
 	ArrayList<User>Followers;
-	ArrayList<User>Following;
-	ArrayList<String>interests;
-	ArrayList<Publication>Read_publications;
 	
+	ArrayList<abstractCategory>interests;
+	ArrayList<Notification>Notifications;
+	ArrayList<Book>Read_Books;
+	ArrayList<Article>Created_Articles;
 	public User(String name , String username, String password)
 	{
 		Name=name;
 		UserName=username;
 		Password=password;
 		Followers=new ArrayList<User>();
-		Following=new ArrayList<User>();
-		interests=new ArrayList<String>();
-		Read_publications=new ArrayList<Publication>();
+		Notifications=new ArrayList<Notification>();
+		interests=new ArrayList<abstractCategory>();
+		Read_Books=new ArrayList<Book>();
+		Created_Articles=new ArrayList<Article>();
 	}
 	public void AddFollower(User u)
 	{
@@ -29,19 +31,16 @@ public class User
 	{
 		Followers.remove(u);
 	}
-	public void Follow(User u)
-	{
-		Following.add(u);
-	}
-	public void  Unfollow(User u)
-	{
-		Following.remove(u);
-	}
-	public void NotifyFollowers()
+	
+	private void NotifyFollowers(Notification n)
 	{
 		
 	}
-	public void Update()
+	public void Notify (Notification n)
+	{
+		
+	}
+	public void  ReadBook(Book b)
 	{
 		
 	}

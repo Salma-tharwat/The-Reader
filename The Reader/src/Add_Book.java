@@ -13,8 +13,11 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JScrollBar;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Add_Book extends JFrame {
 
@@ -124,6 +127,12 @@ public class Add_Book extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		
 		JButton btnNewButton = new JButton("Add Book");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				JOptionPane.showMessageDialog(null, "Book Added");
+			}
+		});
 		btnNewButton.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
 		btnNewButton.setBounds(337, 23, 204, 48);
 		contentPane.add(btnNewButton);

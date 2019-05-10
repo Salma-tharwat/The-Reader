@@ -35,10 +35,7 @@ public class viewFriend_Window extends JFrame {
 		});
 	}
 	
-	public static void displayUser(User U2)
-	{
-		
-	}
+	
 
 	/**
 	 * Create the frame.

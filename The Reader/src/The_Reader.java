@@ -19,7 +19,7 @@ import java.awt.SystemColor;
 
 public class The_Reader {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField usernametxt;
 	private JPasswordField Passwordtxt;
 
@@ -64,11 +64,19 @@ public class The_Reader {
 		frame.getContentPane().add(label);
 		
 		JButton login = new JButton("Login");
-		login.setFont(new Font("Traditional Arabic", Font.PLAIN, 14));
+		login.setForeground(Color.DARK_GRAY);
+		login.setFocusPainted(false);
+		login.setContentAreaFilled(false);
+		login.setBorderPainted(false);
+		login.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
 		login.setBounds(294, 25, 123, 42);
 		frame.getContentPane().add(login);
 		
 		JButton signup = new JButton("SignUp");
+	    signup.setFocusPainted(false);
+		signup.setContentAreaFilled(false);
+		signup.setBorderPainted(false);
+		signup.setForeground(Color.DARK_GRAY);
 		signup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
@@ -76,7 +84,7 @@ public class The_Reader {
 				sup.setVisible(true);
 			}
 		});
-		signup.setFont(new Font("Traditional Arabic", Font.PLAIN, 14));
+		signup.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
 		signup.setBounds(454, 25, 123, 42);
 		frame.getContentPane().add(signup);
 		

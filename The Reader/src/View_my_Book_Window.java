@@ -44,104 +44,72 @@ public class View_my_Book_Window extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
-	///////////////////function that adds book to user 
-	public void add_book_to_user(User u , Book b)
-	{
-		u.Read_Books.add(b);
-	}
 	/////////////////////////////////
 	///////////////////////// dummy data to test
 	User u=new User("ahmed","ah123","1234");
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField Name;
+	private JTextField Date;
+	private JTextField Author;
+	private JTextField Link;
 	private JTextField textField_4;
 	///////////////////////function that Display Book
 	public void displayBook(Book b)
 	{
-		JLabel lblBookName = new JLabel("Book Name:");
-		lblBookName.setForeground(Color.DARK_GRAY);
-		lblBookName.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
-		lblBookName.setBounds(10, 120, 129, 33);
-		contentPane.add(lblBookName);
 		
-		textField = new JTextField(b.Name);
-		textField.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
-		textField.setBounds(155, 121, 277, 29);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		Name = new JTextField(b.Name);
+		Name.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 24));
+		Name.setBounds(10, 139, 277, 29);
+		contentPane.add(Name);
+		Name.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("Date Published:");
-		lblNewLabel_1.setForeground(Color.DARK_GRAY);
-		lblNewLabel_1.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
-		lblNewLabel_1.setBounds(10, 178, 154, 33);
-		contentPane.add(lblNewLabel_1);
-		
-		textField_1 = new JTextField(b.Date_published.toString());
-		textField_1.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
-		textField_1.setBounds(155, 177, 277, 33);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		Date = new JTextField(b.Date_published.toString());
+		Date.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
+		Date.setBounds(10, 245, 277, 33);
+		contentPane.add(Date);
+		Date.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Comments:");
 		lblNewLabel_2.setForeground(Color.DARK_GRAY);
 		lblNewLabel_2.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
-		lblNewLabel_2.setBounds(10, 287, 140, 33);
+		lblNewLabel_2.setBounds(10, 344, 140, 33);
 		contentPane.add(lblNewLabel_2);
 		
 	
 		JLabel lblNewLabel_3 = new JLabel("Categories:");
 		lblNewLabel_3.setForeground(Color.DARK_GRAY);
 		lblNewLabel_3.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		lblNewLabel_3.setBounds(451, 289, 140, 24);
+		lblNewLabel_3.setBounds(608, 141, 140, 24);
 		contentPane.add(lblNewLabel_3);
 		
 		DefaultListModel<String> l1 = new DefaultListModel<>();  
         l1.addElement(b.categories.get(0).Name);
         JList<String> list = new JList<>(l1);
 		list.setFont(new Font("Traditional Arabic", Font.PLAIN, 16));
-		list.setBounds(558, 291, 129, 168);
+		list.setBounds(618, 168, 129, 168);
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		contentPane.add(list);
 		
-		JLabel lblNewLabel_4 = new JLabel("Author:");
-		lblNewLabel_4.setForeground(Color.DARK_GRAY);
-		lblNewLabel_4.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
-		lblNewLabel_4.setBounds(451, 120, 140, 33);
-		contentPane.add(lblNewLabel_4);
+		Author = new JTextField(b.Author);
+		Author.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
+		Author.setBounds(10, 189, 277, 33);
+		contentPane.add(Author);
+		Author.setColumns(10);
 		
-		textField_2 = new JTextField(b.Author);
-		textField_2.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
-		textField_2.setBounds(527, 117, 259, 33);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
-		
-		JLabel lblNewLabel_5 = new JLabel("Link:");
-		lblNewLabel_5.setForeground(Color.DARK_GRAY);
-		lblNewLabel_5.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
-		lblNewLabel_5.setBounds(465, 178, 84, 33);
-		contentPane.add(lblNewLabel_5);
-		
-		textField_3 = new JTextField(b.Hyperlink);
-		textField_3.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
-		textField_3.setBounds(539, 177, 247, 33);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
+		Link = new JTextField(b.Hyperlink);
+		Link.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
+		Link.setBounds(322, 138, 247, 33);
+		contentPane.add(Link);
+		Link.setColumns(10);
 		
 		JLabel lblNewLabel_6 = new JLabel("Description:");
 		lblNewLabel_6.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
 		lblNewLabel_6.setForeground(Color.DARK_GRAY);
-		lblNewLabel_6.setBounds(10, 236, 140, 29);
+		lblNewLabel_6.setBounds(10, 307, 140, 29);
 		contentPane.add(lblNewLabel_6);
 		
 		textField_4 = new JTextField(b.Description);
 		textField_4.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
-		textField_4.setBounds(155, 233, 510, 37);
+		textField_4.setBounds(135, 303, 404, 37);
 		contentPane.add(textField_4);
 		textField_4.setColumns(10);
 		
@@ -209,20 +177,6 @@ public class View_my_Book_Window extends JFrame {
 		btnMyProfie.setBorderPainted(false);
 		btnMyProfie.setBounds(558, 68, 140, 42);
 		contentPane.add(btnMyProfie);
-		
-		JButton addbtn = new JButton("");
-		addbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.jpg")));
-		addbtn.setBorderPainted(false);
-		addbtn.setFocusPainted(false);
-		addbtn.setContentAreaFilled(false);
-		addbtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
-				add_book_to_user(u,b);
-			}
-		});
-		addbtn.setBounds(689, 0, 97, 93);
-		contentPane.add(addbtn);
 		displayBook(b);
 		
 		

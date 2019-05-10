@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
-
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -18,8 +17,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-public class SignUp extends JFrame {
+public class SignUp extends JFrame
+{
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -30,23 +29,30 @@ public class SignUp extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
+	public static SignUp frame = new SignUp();
+	public static void main(String[] args) 
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
 				try {
-					SignUp frame = new SignUp();
+					
 					frame.setVisible(true);
-				} catch (Exception e) {
+				    } 
+				 catch (Exception e)
+				{
 					e.printStackTrace();
 				}
 			}
-		});
-	}
+	});
+}
 
 	/**
 	 * Create the frame.
 	 */
-	public SignUp() {
+	public SignUp()
+	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 680, 435);
 		contentPane = new JPanel();
@@ -62,12 +68,41 @@ public class SignUp extends JFrame {
 		contentPane.add(lblNewLabel);
 
 		JButton SignUpButtn = new JButton("SignUp");
-		SignUpButtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "Welcome to The Reader !!");
+		SignUpButtn.setForeground(Color.DARK_GRAY);
+		SignUpButtn.setFocusPainted(false);
+		SignUpButtn.setContentAreaFilled(false);
+		SignUpButtn.setBorderPainted(false);
+		SignUpButtn.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				if(passwordField.getText().equals("") || passwordField_1.getText().equals("") || textField.getText().equals("") || textField_1.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Please Enter Valid Data ");
+					SignUp sp=new SignUp();
+					sp.setVisible(true);
+					frame.dispose();
+				}
+				else if(!passwordField.getText().equals(passwordField_1.getText()))
+				{
+					JOptionPane.showMessageDialog(null, "passwords does not match ");
+					SignUp sp=new SignUp();
+					sp.setVisible(true);
+					frame.dispose();
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Welcome to The Reader !! ..");
+				User u=new User(textField.getText(),textField_1.getText(),passwordField.getText());
+				UserProfile up=new UserProfile(u);
+				up.setVisible(true);
+				frame.dispose();
+				}
+				
+				
 			}
 		});
-		SignUpButtn.setFont(new Font("Traditional Arabic", Font.PLAIN, 18));
+		SignUpButtn.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
 		SignUpButtn.setBounds(412, 35, 128, 35);
 		contentPane.add(SignUpButtn);
 		

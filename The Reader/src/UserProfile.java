@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JInternalFrame;
 
 public class UserProfile extends JFrame {
@@ -32,15 +33,17 @@ public class UserProfile extends JFrame {
 
 
 	private JPanel contentPane;
-
+	static JButton btnMyBooks;
+	static JButton reference;
 	/**
 	 * Launch the application.
 	 */
+	public static UserProfile frame = new UserProfile(new User("Ahmed","Ahmd","1234"));
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserProfile frame = new UserProfile(new User("Ahmed","Ahmd","1234"));
+					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,33 +54,38 @@ public class UserProfile extends JFrame {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void Display_friends(User u) // function that takes a user and display Names and books of the friends
     {
-    	JFrame frame = new JFrame("Friends");  
-        JPanel panel = new JPanel();  
-        panel.setLayout(new FlowLayout());  
-      
-      // panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        for(int i=0;i<u.Followers.size();i++)
+    	JPanel panel = new JPanel();
+    	panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ));
+    	int v=ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+        int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS; 
+        JScrollPane jsp=new JScrollPane(panel,v,h);
+        jsp.setBounds(reference.getLocation().x, reference.getLocation().y,500, 250);
+    	//JOptionPane.showMessageDialog(null, u.Read_Books.get(0).Name);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    	for(int i=0;i<u.Followers.size();i++)
     	{
-    		 JButton friend1 = new JButton(u.Followers.get(i).Name);
-    		 friend1.setOpaque(false);
-    		 friend1.setContentAreaFilled(false);
-    		 friend1.setBorderPainted(false);
-    		 User Friend=u.Followers.get(i);
-    		 friend1.addActionListener(new ActionListener(){  
-    				 public void actionPerformed(ActionEvent e){  
-    					 //JOptionPane.showMessageDialog(null, Friend.Name);
-    				             viewFriend_Window up=new viewFriend_Window(Friend);
+    		 JButton Book1 = new JButton(u.Followers.get(i).Name);
+    		    Book1.setOpaque(false);
+    			Book1.setContentAreaFilled(false);
+    			Book1.setBorderPainted(false);
+    			User u2=u.Followers.get(i);
+    			 Book1.addActionListener(new ActionListener(){  
+    				 public void actionPerformed(ActionEvent e)
+    				 {  
+    					
+    					 UserProfile up =new UserProfile(u2);
     				             up.setVisible(true);
+    				             frame.dispose();
     				         }  
     				     });  
-    		 panel.add(friend1);
-
+    		 panel.add(Book1);
+    		
     	}
-        frame.getContentPane().add(panel);  
-        frame.setSize(200, 300);  
-        frame.setLocationRelativeTo(null);  
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
-        frame.setVisible(true);  
+    		frame.getContentPane().add(jsp);  
+    		//frame.setSize(200, 300);  
+    		//frame.setLocationRelativeTo(null);  
+    		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+    		frame.setVisible(true);  
     }
     
  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,12 +121,15 @@ public class UserProfile extends JFrame {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 public static void Display_Read_Books(User u) // function that takes a user and display Publications Read By the User
 {
-	JFrame frame = new JFrame("Publications");  
-	JPanel panel = new JPanel();  
-	panel.setLayout(new FlowLayout());  
-	JLabel label = new JLabel(" Publications  "); 
-	panel.add(label);  
-	// panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+	JPanel panel = new JPanel();
+	panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ));
+	int v=ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+    int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS; 
+    JScrollPane jsp=new JScrollPane(panel,v,h);
+    jsp.setBounds(reference.getLocation().x, reference.getLocation().y,500, 250);
+	u.Read_Books.add(b);
+	//JOptionPane.showMessageDialog(null, u.Read_Books.get(0).Name);
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	for(int i=0;i<u.Read_Books.size();i++)
 	{
 		 JButton Book1 = new JButton(u.Read_Books.get(i).Name);
@@ -132,13 +143,12 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 				         }  
 				     });  
 		 panel.add(Book1);
-		 JTextField textField_2 = new JTextField(u.Read_Books.get(i).Description);
-		 panel.add(textField_2);
+		
 		
 	}
-		frame.getContentPane().add(panel);  
-		frame.setSize(200, 300);  
-		frame.setLocationRelativeTo(null);  
+		frame.getContentPane().add(jsp);  
+		//frame.setSize(200, 300);  
+		//frame.setLocationRelativeTo(null);  
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
 		frame.setVisible(true);  
 }
@@ -155,12 +165,10 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 	static Book b=new Book("Champions",d,new ArrayList<abstractCategory>(),"Sports Book ","","Abo Treka");
 	
 	/////////////////////////////////////////////
-	public UserProfile( User u) {
+	public UserProfile( User u) 
+	{
 		u.Followers.add(u2);
 		u.Followers.add(u3);
-		u.Read_Books.add(b);
-		d.setMonth(2);
-		d.setYear(2010);
 		User U1= new User("Ahmed","Ahmed_123","12345");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 867, 520);
@@ -181,6 +189,7 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 			public void actionPerformed(ActionEvent e) {
 				Home h=new Home();
 				h.setVisible(true);
+				frame.dispose();
 			}
 		});
 		btnNewButton.setForeground(Color.DARK_GRAY);
@@ -223,23 +232,8 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 		btnMyBooks.setOpaque(false);
 		btnMyBooks.setContentAreaFilled(false);
 		btnMyBooks.setBorderPainted(false);
-		btnMyBooks.setBounds(300, 79, 140, 39);
+		btnMyBooks.setBounds(311, 79, 140, 39);
 		contentPane.add(btnMyBooks);
-		
-		JButton btnFindBooks = new JButton("Find Books");
-		btnFindBooks.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
-				
-			}
-		});
-		btnFindBooks.setForeground(Color.DARK_GRAY);
-		btnFindBooks.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
-		btnFindBooks.setOpaque(false);
-		btnFindBooks.setContentAreaFilled(false);
-		btnFindBooks.setBorderPainted(false);
-		btnFindBooks.setBounds(410, 79, 150, 39);
-		contentPane.add(btnFindBooks);
 		
 		JButton btnFriends = new JButton("Friends");
 		btnFriends.addActionListener(new ActionListener() {
@@ -254,7 +248,7 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 		btnFriends.setOpaque(false);
 		btnFriends.setContentAreaFilled(false);
 		btnFriends.setBorderPainted(false);
-		btnFriends.setBounds(518, 77, 140, 42);
+		btnFriends.setBounds(427, 77, 140, 42);
 		contentPane.add(btnFriends);
 		
 		JComboBox comboBox = new JComboBox();
@@ -315,7 +309,7 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 		btnNewButton_2.setContentAreaFilled(false);
 		btnNewButton_2.setBorderPainted(false);
 		btnNewButton_2.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
-		btnNewButton_2.setBounds(742, 113, 99, 33);
+		btnNewButton_2.setBounds(537, 82, 99, 33);
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNoti ;
@@ -347,6 +341,13 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 		contentPane.add(newsfeed);
 		
 		JButton btnCreateArticle = new JButton("Create Article");
+		btnCreateArticle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Create_Article_Window cr=new Create_Article_Window();
+				cr.setVisible(true);
+				frame.dispose();
+			}
+		});
 		btnCreateArticle.setOpaque(false);
 		btnCreateArticle.setForeground(Color.DARK_GRAY);
 		btnCreateArticle.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
@@ -354,6 +355,13 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 		btnCreateArticle.setBorderPainted(false);
 		btnCreateArticle.setBounds(0, 169, 159, 42);
 		contentPane.add(btnCreateArticle);
+		
+		 reference = new JButton();
+		reference.setBorderPainted(false);
+		reference.setFocusPainted(false);
+		reference.setContentAreaFilled(false);
+		reference.setBounds(297, 169, 70, 23);
+		contentPane.add(reference);
 		
 		
 		

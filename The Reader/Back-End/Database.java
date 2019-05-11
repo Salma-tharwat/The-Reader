@@ -283,7 +283,7 @@ public class Database {
 	private void getUserNotifications(ArrayList<Notification> notifications) {
 		try {
 			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from book_notification");
+			ResultSet rs = stmt.executeQuery("select * from user_notification");
 			while (rs.next()) {
 				int id = rs.getInt(1);
 				String content = rs.getString(2);
@@ -462,6 +462,9 @@ public class Database {
 			preparedStatement.setBytes(4, article.content);
 			preparedStatement.setString(5, article.Writer.userName);
 			preparedStatement.executeUpdate();
+			articles.add(article);
+			User writer = getUser(article.Writer.userName);
+			writer.createdArticles.add(article);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);

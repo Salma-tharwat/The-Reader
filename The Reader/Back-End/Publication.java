@@ -41,7 +41,7 @@ public abstract class Publication {
 		return followers.contains(user);
 	}
 
-	protected abstract void NotifyFollowers();
+	protected abstract void notifyFollowers(Notification notification);
 
 	// add new comment
 	// true : comment added

@@ -462,9 +462,9 @@ public class Database {
 			preparedStatement.setBytes(4, article.content);
 			preparedStatement.setString(5, article.Writer.userName);
 			preparedStatement.executeUpdate();
+			
 			articles.add(article);
-			User writer = getUser(article.Writer.userName);
-			writer.createdArticles.add(article);
+			article.Writer.createdArticles.add(article);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -480,6 +480,8 @@ public class Database {
 			preparedStatement.setInt(1, article.id);
 			preparedStatement.setString(2, category.name);
 			preparedStatement.executeUpdate();
+			
+			article.categories.add(category);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -489,12 +491,14 @@ public class Database {
 	
 	public boolean addArticleComment(Article article, Comment comment) {
 		try {
-
+			//TODO: the id should be sequence
 			String query = "INSERT INTO article_comments (article_id, comment_id) values(?, ?);";
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, article.id);
 			preparedStatement.setInt(2, comment.id);
 			preparedStatement.executeUpdate();
+			
+			article.comments.add(comment);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -510,6 +514,8 @@ public class Database {
 			preparedStatement.setInt(1, article.id);
 			preparedStatement.setString(2, follower.name);
 			preparedStatement.executeUpdate();
+			
+			article.followers.add(follower);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -531,6 +537,9 @@ public class Database {
 			preparedStatement.setString(4, user.userName);
 			preparedStatement.setInt(5, articleNotification.article.id);
 			preparedStatement.executeUpdate();
+			
+			notifications.add(articleNotification);
+			user.notifications.add(articleNotification);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -550,6 +559,8 @@ public class Database {
 			preparedStatement.setString(5, book.hyperlink);
 			preparedStatement.setString(6, book.description);
 			preparedStatement.executeUpdate();
+			
+			books.add(book);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -565,6 +576,8 @@ public class Database {
 			preparedStatement.setInt(1, book.id);
 			preparedStatement.setString(2, category.name);
 			preparedStatement.executeUpdate();
+			
+			book.categories.add(category);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -580,6 +593,8 @@ public class Database {
 			preparedStatement.setInt(1, book.id);
 			preparedStatement.setInt(2, comment.id);
 			preparedStatement.executeUpdate();
+			
+			book.comments.add(comment);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -595,6 +610,8 @@ public class Database {
 			preparedStatement.setInt(1, book.id);
 			preparedStatement.setString(2, user.userName);
 			preparedStatement.executeUpdate();
+			
+			book.followers.add(user);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -616,6 +633,9 @@ public class Database {
 			preparedStatement.setString(4, user.userName);
 			preparedStatement.setInt(5, bookNotification.book.id);
 			preparedStatement.executeUpdate();
+			
+			notifications.add(bookNotification);
+			user.notifications.add(bookNotification);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -631,6 +651,8 @@ public class Database {
 			preparedStatement.setInt(1, book.id);
 			preparedStatement.setString(2, user.userName);
 			preparedStatement.executeUpdate();
+			
+			user.readBooks.add(book);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -645,6 +667,8 @@ public class Database {
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, category.name);
 			preparedStatement.executeUpdate();
+			
+			categories.add(category);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -661,6 +685,8 @@ public class Database {
 			preparedStatement.setString(2, comment.content);
 			preparedStatement.setString(3, comment.user.userName);
 			preparedStatement.executeUpdate();
+			
+			comments.add(comment);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -678,6 +704,9 @@ public class Database {
 			preparedStatement.setInt(3, reply.parent.id);
 			preparedStatement.setString(4, reply.user.userName);
 			preparedStatement.executeUpdate();
+			
+			AbstractComment mainComment = getComment(reply.parent.id);
+			mainComment.replies.add(reply);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -694,6 +723,8 @@ public class Database {
 			preparedStatement.setString(2, user.password);
 			preparedStatement.setString(3, user.name);
 			preparedStatement.executeUpdate();
+			
+			users.add(user);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -709,6 +740,8 @@ public class Database {
 			preparedStatement.setString(1, user.userName);
 			preparedStatement.setString(2, category.name);
 			preparedStatement.executeUpdate();
+			
+			user.interests.add(category);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -724,6 +757,8 @@ public class Database {
 			preparedStatement.setString(1, followed.userName);
 			preparedStatement.setString(2, follower.userName);
 			preparedStatement.executeUpdate();
+			
+			followed.followers.add(follower);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -745,6 +780,8 @@ public class Database {
 			preparedStatement.setString(4, user.userName);
 			preparedStatement.setString(5, userNotification.user.userName);
 			preparedStatement.executeUpdate();
+			
+			user.notifications.add(userNotification);
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);

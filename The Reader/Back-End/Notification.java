@@ -18,6 +18,8 @@ public abstract class Notification {
 		notificationState.getBackGroundColor();
 	}
 
+	public abstract Notification clone();
+	
 	public abstract void onclick() ;
 
 }

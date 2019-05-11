@@ -6,5 +6,9 @@ public class SeenNotification implements NotificationState {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	@Override
+	public NotificationState clone() {
+		return new SeenNotification();
+	}
 }

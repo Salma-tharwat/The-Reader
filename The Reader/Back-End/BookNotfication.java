@@ -13,5 +13,11 @@ public class BookNotfication extends Notification {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Notification clone() {
+		Notification notification = new BookNotfication(message, notificationState.clone(), book);
+		return notification;
+	}
 	
 }

@@ -1,7 +1,7 @@
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
-public class User 
-{
+public class User {
 	String name;
 	String userName;
 	String password;
@@ -12,9 +12,9 @@ public class User
 	ArrayList<Article> createdArticles;
 
 	public User(String name, String username, String password) {
-		name = name;
+		this.name = name;
 		userName = username;
-		password = password;
+		this.password = password;
 		followers = new ArrayList<User>();
 		notifications = new ArrayList<Notification>();
 		interests = new ArrayList<Category>();
@@ -22,24 +22,31 @@ public class User
 		createdArticles = new ArrayList<Article>();
 	}
 
-	public void AddFollower(User u) {
+	public void addFollower(User u) {
 		followers.add(u);
 	}
 
-	public void RemoveFollower(User u) {
+	public void removeFollower(User u) {
 		followers.remove(u);
 	}
 
-	private void NotifyFollowers(Notification n) {
-
+	private void notifyFollowers(Notification notification) {
+		for (User follower : followers) {
+			follower.notify(notification.clone());
+		}
 	}
 
-	public void Notify(Notification n) {
-
+	public void notify(Notification notification) {
+		notifications.add(notification);
 	}
 
-	public void ReadBook(Book b) {
-
+	public void readBook(Book book) {
+		readBooks.add(book);
+		notifyFollowers(new BookNotfication(MessageFormat.format("User {0} read book {1}", name, book.name), new NotSeenNotification(), book) );
 	}
-
+	
+	public void createdArticle(Article article){
+		createdArticles.add(article);
+		notifyFollowers(new articleNotification(MessageFormat.format("User {0} created article {1}", name, article.name), new NotSeenNotification(), article));
+	}
 }

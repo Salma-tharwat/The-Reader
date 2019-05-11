@@ -14,4 +14,10 @@ public class articleNotification extends Notification {
 		
 	}
 
+	@Override
+	public Notification clone() {
+		Notification notification = new articleNotification(message, notificationState.clone(), article);
+		return notification;
+	}
+
 }

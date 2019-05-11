@@ -13,5 +13,11 @@ public class UserNotification extends Notification {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Notification clone() {
+		Notification notification = new UserNotification(message, notificationState.clone(), user);
+		return notification;
+	}
 	
 }

@@ -43,6 +43,7 @@ public class Database {
 		comments = getAllComments();
 		notifications = getAllNotifications();
 		getArticleCategories();
+		getArticleComments();
 	}
 
 	private boolean initialize() {
@@ -306,6 +307,22 @@ public class Database {
 				Article article = getArticle(articleId);
 				Category category = getCategory(categoryName);
 				article.categories.add(category);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void getArticleComments() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from article_comments");
+			while(rs.next()) {
+				int articleId = rs.getInt(1);
+				int commentId = rs.getInt(2);
+				Article article = getArticle(articleId);
+				AbstractComment comment = getComment(commentId);
+				article.comments.add((Comment)comment);
 			}
 		} catch (Exception e) {
 			System.out.println(e);

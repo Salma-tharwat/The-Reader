@@ -10,6 +10,10 @@ public class Article extends Publication {
 		content = file;
 	}
 
+	public Article() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	protected void notifyFollowers(Notification notification) {
 		for(User follower : followers) 

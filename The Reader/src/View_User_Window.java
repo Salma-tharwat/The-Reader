@@ -2,9 +2,11 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -13,6 +15,8 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -65,7 +69,7 @@ public class View_User_Window extends JFrame {
 			{
 				for(int i=0;i<Database.getInstance().users.size();i++)
 				{
-					JOptionPane.showMessageDialog(null,The_Reader.LoggedInUser.name);
+					//JOptionPane.showMessageDialog(null,The_Reader.LoggedInUser.name);
 					if(Database.getInstance().users.get(i).userName.equals(The_Reader.LoggedInUser.userName))
 					{
 						JOptionPane.showMessageDialog(null,"You Followed "+u.name+" Sucessfully");
@@ -149,9 +153,36 @@ public class View_User_Window extends JFrame {
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				
-				JOptionPane.showMessageDialog(null,u.followers.size());
-				UserProfile.Display_friends(u);
+				//JOptionPane.showMessageDialog(null,u.followers.size());
+				JPanel panel = new JPanel();
+		    	panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ));
+		    	JFrame f=new JFrame();
+		        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		    	for(int i=0;i<u.followers.size();i++)
+		    	{
+		    		//System.out.println(u.followers.size());
+		    		 JButton Book1 = new JButton(u.followers.get(i).name);
+		    		    Book1.setOpaque(false);
+		    			Book1.setContentAreaFilled(false);
+		    			Book1.setBorderPainted(false);
+		    			User u2=u.followers.get(i);
+		    			 Book1.addActionListener(new ActionListener(){  
+		    				 public void actionPerformed(ActionEvent e)
+		    				 {  
+		    					
+		    					 viewFriend_Window up =new viewFriend_Window(u2);
+		    				             up.setVisible(true);
+		    				             frame.dispose();
+		    				         }  
+		    				     });  
+		    		 panel.add(Book1);
+		    		
+		    	}
+		    		f.getContentPane().add(panel);  
+		    	    f.setSize(200, 300);  
+		    		f.setLocationRelativeTo(button_4);  
+		    		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+		    		f.setVisible(true);  
 			}
 		});
 		button_4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/searchfriends.png")));
@@ -162,11 +193,43 @@ public class View_User_Window extends JFrame {
 		contentPane.add(button_4);
 		
 		JButton button_5 = new JButton("");
-		button_5.addActionListener(new ActionListener() {
+		button_5.addActionListener(new ActionListener()
+		{
 			public void actionPerformed(ActionEvent arg0)
-			{
-				UserProfile.Display_Read_Books(u);
+			{   
+				//JOptionPane.showMessageDialog(null,u.followers.size());
+				JPanel panel = new JPanel();
+		    	panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ));
+		    	JFrame f=new JFrame();
+		        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		    	for(int i=0;i<u.readBooks.size();i++)
+		    	{
+		    		//System.out.println(u.followers.size());
+		    		 JButton Book1 = new JButton(u.readBooks.get(i).name);
+		    		    Book1.setOpaque(false);
+		    			Book1.setContentAreaFilled(false);
+		    			Book1.setBorderPainted(false);
+		    			Book b2=u.readBooks.get(i);
+		    			 Book1.addActionListener(new ActionListener(){  
+		    				 public void actionPerformed(ActionEvent e)
+		    				 {  
+		    					
+		    					 View_Book_Window up =new View_Book_Window(b2);
+		    				             up.setVisible(true);
+		    				             frame.dispose();
+		    				         }  
+		    				     });  
+		    		 panel.add(Book1);
+		    		
+		    	}
+		    		f.getContentPane().add(panel);  
+		    	    f.setSize(200, 300);  
+		    		f.setLocationRelativeTo(button_4);  
+		    		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+		    		f.setVisible(true);  
 			}
+				
+			
 		});
 		button_5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/searchbooks.jpg")));
 		button_5.setFocusPainted(false);
@@ -176,6 +239,41 @@ public class View_User_Window extends JFrame {
 		contentPane.add(button_5);
 		
 		JButton button_6 = new JButton("");
+		button_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				//JOptionPane.showMessageDialog(null,u.followers.size());
+				JPanel panel = new JPanel();
+		    	panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ));
+		    	JFrame f=new JFrame();
+		        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		    	for(int i=0;i<u.createdArticles.size();i++)
+		    	{
+		    		//System.out.println(u.followers.size());
+		    		 JButton Book1 = new JButton(u.createdArticles.get(i).name);
+		    		    Book1.setOpaque(false);
+		    			Book1.setContentAreaFilled(false);
+		    			Book1.setBorderPainted(false);
+		    			Article u2=u.createdArticles.get(i);
+		    			 Book1.addActionListener(new ActionListener(){  
+		    				 public void actionPerformed(ActionEvent e)
+		    				 {  
+		    					
+		    					 View_Article_Window up =new View_Article_Window(u2);
+		    				             up.setVisible(true);
+		    				             frame.dispose();
+		    				         }  
+		    				     });  
+		    		 panel.add(Book1);
+		    		
+		    	}
+		    		f.getContentPane().add(panel);  
+		    	    f.setSize(200, 300);  
+		    		f.setLocationRelativeTo(button_4);  
+		    		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+		    		f.setVisible(true);  
+			}
+		});
 		button_6 .setIcon(new javax.swing.ImageIcon(getClass().getResource("/articles.png")));
 		button_6.setFocusPainted(false);
 		button_6.setContentAreaFilled(false);

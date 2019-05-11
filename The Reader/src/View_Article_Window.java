@@ -20,7 +20,7 @@ public class View_Article_Window extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					View_Article_Window frame = new View_Article_Window();
+					View_Article_Window frame = new View_Article_Window(new Article());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -32,7 +32,7 @@ public class View_Article_Window extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public View_Article_Window() {
+	public View_Article_Window(Article a) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 878, 493);
 		contentPane = new JPanel();

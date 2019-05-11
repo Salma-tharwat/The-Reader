@@ -36,10 +36,10 @@ public class Database {
 
 		initialize();
 
+		users = getAllUsers();
 		articles = getAllArticles();
 		books = getAllBooks();
 		categories = getAllCategories();
-		users = getAllUsers();
 		comments = getAllComments();
 		notifications = getAllNotifications();
 		getArticleCategories();
@@ -49,6 +49,8 @@ public class Database {
 		getBookComments();
 		getBookFollowers();
 		getBookReaders();
+		getUserCategories();
+		getUserFollowers();
 	}
 
 	private boolean initialize() {
@@ -141,6 +143,8 @@ public class Database {
 
 				Article a = new Article(rs.getInt(1), rs.getString(2), rs.getDate(3), getUser(rs.getString(5)),
 						content.getBytes(1, length));
+				User user = getUser(rs.getString(5));
+				user.createdArticles.add(a);
 				myArticles.add(a);
 			}
 			return myArticles;
@@ -409,6 +413,38 @@ public class Database {
 				Book book = getBook(bookId);
 				User user = getUser(userName);
 				user.readBooks.add(book);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	private void getUserCategories() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from user_categories");
+			while(rs.next()) {
+				String userName = rs.getString(1);
+				String categoryName = rs.getString(2);
+				User user = getUser(userName);
+				Category category = getCategory(categoryName);
+				user.interests.add(category);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	private void getUserFollowers() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from user_followers");
+			while(rs.next()) {
+				String followedUserName = rs.getString(1);
+				String followerUserName = rs.getString(2);
+				User followed = getUser(followedUserName);
+				User follower = getUser(followerUserName);
+				followed.followers.add(follower);
 			}
 		} catch (Exception e) {
 			System.out.println(e);

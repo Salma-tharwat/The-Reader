@@ -26,7 +26,7 @@ public class View_Book_Window extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static View_Book_Window frame = new View_Book_Window(Database.getInstance().getBook(0));
+	 
 	private JTextField BookName;
 	private JTextField Author;
 	private JTextField link;
@@ -35,7 +35,7 @@ public class View_Book_Window extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
+					View_Book_Window frame = new View_Book_Window(Database.getInstance().books.get(0));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,6 +51,7 @@ public class View_Book_Window extends JFrame {
 	 * Create the frame.
 	 */
 	public View_Book_Window(Book b) {
+		System.out.println(b.name);
 		JOptionPane.showMessageDialog(null,b.name);
 		JOptionPane.showMessageDialog(null,b.author);
 		JOptionPane.showMessageDialog(null,b.datePublished);
@@ -77,6 +78,7 @@ public class View_Book_Window extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
+				The_Reader.LoggedInUser.readBook(b);
 				add_book(b,The_Reader.LoggedInUser);
 			}
 		});
@@ -89,7 +91,7 @@ public class View_Book_Window extends JFrame {
 			{
 				Home h=new Home();
 				h.setVisible(true);
-				frame.dispose();
+				//frame.dispose();
 				
 			}
 		});
@@ -122,7 +124,7 @@ public class View_Book_Window extends JFrame {
 			{
 				UserProfile up=new UserProfile(The_Reader.LoggedInUser);
 						up.setVisible(true);
-						frame.dispose();
+					//	frame.dispose();
 			}
 		});
 		button_2.setOpaque(false);
@@ -157,13 +159,13 @@ public class View_Book_Window extends JFrame {
 		lblCategory.setBounds(714, 148, 129, 22);
 		contentPane.add(lblCategory);
 		
-		DefaultListModel<String> l1 = new DefaultListModel<>();  
+		/*DefaultListModel<String> l1 = new DefaultListModel<>();  
         l1.addElement(b.categories.get(0).name);
         JList<String> list = new JList<>(l1);
 		list.setFont(new Font("Traditional Arabic", Font.PLAIN, 16));
 		list.setBounds(714, 181, 129, 188);
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		contentPane.add(list);
+		contentPane.add(list);*/
 		
 		textField_1 = new JTextField(b.description);
 		textField_1.setBounds(332, 205, 362, 32);

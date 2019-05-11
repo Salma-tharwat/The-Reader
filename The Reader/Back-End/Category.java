@@ -4,8 +4,10 @@ public class Category {
 	String name;
 	ArrayList<User> followers;
 
-	public Category(String name) {
+	public Category(String name) 
+	{
 		this.name = name;
+		followers=new ArrayList<User>();
 	}
 
 	public String getName() {
@@ -25,5 +27,10 @@ public class Category {
 	public void notifyFollowers(Notification notification) {
 		for(User user : followers)
 			user.notify(notification);
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 }

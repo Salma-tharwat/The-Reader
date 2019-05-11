@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 
 public class Add_Book extends JFrame {
 
@@ -29,6 +30,7 @@ public class Add_Book extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_3;
+	JTextArea textArea;
 	public static Add_Book frame = new Add_Book();
 	/**
 	 * Launch the application.
@@ -113,7 +115,7 @@ public class Add_Book extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				Date d=new Date(Integer.parseInt(s1.getValue().toString()),Integer.parseInt(s2.getValue().toString()),Integer.parseInt(s.getValue().toString()));
-				Book b = new Book(0,textField.getText(),d,textField_1.getText(), textField_3.getText(), "");
+				Book b = new Book(0,textField.getText(),d,textField_1.getText(), textField_3.getText(), textArea.getText());
 				boolean added =Database.getInstance().addBook(b);
 				Database.getInstance().books.add(b);
 				if(added)
@@ -132,7 +134,7 @@ public class Add_Book extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
-		btnNewButton.setBounds(337, 23, 204, 48);
+		btnNewButton.setBounds(195, 11, 204, 48);
 		contentPane.add(btnNewButton);
 	
          
@@ -151,6 +153,15 @@ public class Add_Book extends JFrame {
 		s.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		s.setBounds(315, 273, 82, 31);
 		contentPane.add(s);
+		
+		JLabel lblNewLabel_2 = new JLabel("Description:");
+		lblNewLabel_2.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
+		lblNewLabel_2.setBounds(419, 138, 129, 35);
+		contentPane.add(lblNewLabel_2);
+		
+		 textArea = new JTextArea();
+		textArea.setBounds(429, 168, 173, 207);
+		contentPane.add(textArea);
 		
 		
 	}

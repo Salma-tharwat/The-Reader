@@ -151,6 +151,7 @@ public class View_User_Window extends JFrame {
 			{
 				
 				JOptionPane.showMessageDialog(null,u.followers.size());
+				UserProfile.Display_friends(u);
 			}
 		});
 		button_4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/searchfriends.png")));
@@ -161,6 +162,12 @@ public class View_User_Window extends JFrame {
 		contentPane.add(button_4);
 		
 		JButton button_5 = new JButton("");
+		button_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				UserProfile.Display_Read_Books(u);
+			}
+		});
 		button_5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/searchbooks.jpg")));
 		button_5.setFocusPainted(false);
 		button_5.setContentAreaFilled(false);

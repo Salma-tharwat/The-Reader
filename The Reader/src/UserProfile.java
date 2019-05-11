@@ -269,13 +269,27 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 		welcomelabel.setBounds(10, 125, 319, 33);
 		contentPane.add(welcomelabel);
 		
-		JButton btnNewButton_1 = new JButton("Inbox");
+		JButton btnNewButton_1 = new JButton("Follow Category");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				//System.out.println(Database.getInstance().categories.size());
+				String a=JOptionPane.showInputDialog(null, "Enter Category Name");
+				Category c=Database.getInstance().getCategory(a);
+				boolean followed=Database.getInstance().addUserCategory(The_Reader.LoggedInUser, c);
+				System.out.println(followed);
+				if(!followed)
+				{
+					JOptionPane.showMessageDialog(null, "Successfully Followed ");
+				}
+			}
+		});
 		btnNewButton_1.setForeground(Color.DARK_GRAY);
 		btnNewButton_1.setOpaque(false);
 		btnNewButton_1.setContentAreaFilled(false);
 		btnNewButton_1.setBorderPainted(false);
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		btnNewButton_1.setBounds(22, 229, 99, 42);
+		btnNewButton_1.setBounds(-16, 227, 204, 42);
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnSignout = new JButton("Sign Out");
@@ -292,7 +306,7 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 		btnSignout.setContentAreaFilled(false);
 		btnSignout.setBorderPainted(false);
 		btnSignout.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		btnSignout.setBounds(10, 292, 123, 39);
+		btnSignout.setBounds(23, 280, 123, 39);
 		contentPane.add(btnSignout);
 		
 		JButton btnNewButton_2 = new JButton("Go !");

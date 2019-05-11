@@ -158,6 +158,7 @@ public class Database {
 
 	public Category getCategory(String name) {
 		for (Category category : categories) {
+			//System.out.println(category.name);
 			if (category.name.equals(name))
 				return category;
 		}

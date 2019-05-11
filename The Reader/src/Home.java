@@ -73,10 +73,10 @@ public class Home extends JFrame {
 				panel.add(result1);
 				result1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						JOptionPane.showMessageDialog(null, current.name);
+						//JOptionPane.showMessageDialog(null, current.name);
 						View_Book_Window up = new View_Book_Window(current);
 						up.setVisible(true);
-						frame.dispose();
+						//frame.dispose();
 					}
 				});
 			}

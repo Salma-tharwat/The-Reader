@@ -34,5 +34,10 @@ public class Book extends Publication {
 		Database db = Database.getInstance();
 		return db.addBookFollower(this, user);
 	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 
 }

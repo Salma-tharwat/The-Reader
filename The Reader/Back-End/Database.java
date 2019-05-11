@@ -186,7 +186,7 @@ public class Database {
 		}
 	}
 	
-	public boolean addArticleFollowers(Article article, User follower) {
+	public boolean addArticleFollower(Article article, User follower) {
 		try {
 
 			String query = "INSERT INTO article_followers (article_id, follower_name) values(?, ?);";
@@ -208,7 +208,7 @@ public class Database {
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, articleNotification.id);
 			preparedStatement.setString(2, articleNotification.message);
-			if(articleNotification.notificationState.IsSeen())
+			if(articleNotification.IsSeen())
 				preparedStatement.setBoolean(3, true);
 			else
 				preparedStatement.setBoolean(3, false);
@@ -222,5 +222,150 @@ public class Database {
 		}
 	}
 	
+	public boolean addBook(Book book) {
+		try {
+
+			String query = "INSERT INTO book (id, Author, Name, Date, Link, Description) values(?, ?, ?, ?, ?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, book.id);
+			preparedStatement.setString(2, book.author);
+			preparedStatement.setString(3, book.name);
+			preparedStatement.setDate(4, (Date) book.datePublished);
+			preparedStatement.setString(5, book.hyperlink);
+			preparedStatement.setString(6, book.description);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
 	
+	public boolean addBookCategory(Book book, Category category) {
+		try {
+
+			String query = "INSERT INTO book_categories (book_id, category_name) values(?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, book.id);
+			preparedStatement.setString(2, category.name);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public boolean addBookComment(Book book, Comment comment) {
+		try {
+
+			String query = "INSERT INTO book_comments (book_id, comment_id) values(?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, book.id);
+			preparedStatement.setInt(2, comment.id);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public boolean addBookFollower(Book book, User user) {
+		try {
+
+			String query = "INSERT INTO book_followers (book_id, user_name) values(?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, book.id);
+			preparedStatement.setString(2, user.userName);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public boolean addBookNotification(User user, BookNotfication bookNotification) {
+		try {
+
+			String query = "INSERT INTO book_notification (id, content, state, to_user, book_id) values(?, ?, ?, ?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, bookNotification.id);
+			preparedStatement.setString(2, bookNotification.message);
+			if(bookNotification.IsSeen())
+				preparedStatement.setBoolean(3, true);
+			else
+				preparedStatement.setBoolean(3, false);
+			preparedStatement.setString(4, user.userName);
+			preparedStatement.setInt(5, bookNotification.book.id);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public boolean addBookReader(User user, Book book) {
+		try {
+
+			String query = "INSERT INTO book_readers (book_id, user_name) values(?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, book.id);
+			preparedStatement.setString(2, user.userName);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public boolean addCategory(Category category) {
+		try {
+
+			String query = "INSERT INTO category (name) values(?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, category.name);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public boolean addComment(Comment comment) {
+		try {
+
+			String query = "INSERT INTO comment (id, content, writer) values(?, ?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, comment.id);
+			preparedStatement.setString(2, comment.content);
+			preparedStatement.setString(3, comment.user.userName);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public boolean addReply(Reply reply) {
+		try {
+
+			String query = "INSERT INTO comment (id, content, parent_id writer) values(?, ?, ?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, reply.id);
+			preparedStatement.setString(2, reply.content);
+			preparedStatement.setInt(3, reply.parent.id);
+			preparedStatement.setString(4, reply.user.userName);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
 }

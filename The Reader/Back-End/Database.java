@@ -44,6 +44,7 @@ public class Database {
 		notifications = getAllNotifications();
 		getArticleCategories();
 		getArticleComments();
+		getArticleFollowers();
 	}
 
 	private boolean initialize() {
@@ -328,7 +329,24 @@ public class Database {
 			System.out.println(e);
 		}
 	}
-
+	
+	
+	private void getArticleFollowers() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from article_followers");
+			while(rs.next()) {
+				int articleId = rs.getInt(1);
+				String userName = rs.getString(2);
+				Article article = getArticle(articleId);
+				User user = getUser(userName);
+				article.followers.add(user);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
 	public boolean addArticle(Article article) {
 		try {
 

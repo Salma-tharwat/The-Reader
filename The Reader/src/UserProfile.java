@@ -73,7 +73,7 @@ public class UserProfile extends JFrame {
     				 public void actionPerformed(ActionEvent e)
     				 {  
     					
-    					 UserProfile up =new UserProfile(u2);
+    					 viewFriend_Window up =new viewFriend_Window(u2);
     				             up.setVisible(true);
     				             frame.dispose();
     				         }  

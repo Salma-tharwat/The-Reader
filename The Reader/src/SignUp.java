@@ -100,7 +100,6 @@ public class SignUp extends JFrame
 						JOptionPane.showMessageDialog(null, "Welcome to The Reader !! ..");
 				The_Reader.LoggedInUser=u;
 				UserProfile up=new UserProfile(u);
-				
 				up.setVisible(true);
 				frame.dispose();
 					}

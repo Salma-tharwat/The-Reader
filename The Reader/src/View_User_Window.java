@@ -63,8 +63,15 @@ public class View_User_Window extends JFrame {
 		btn_add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				The_Reader.LoggedInUser.followers.add(u);
-				Database.getInstance().addUserFollower(u,The_Reader.LoggedInUser);
+				for(int i=0;i<Database.getInstance().users.size();i++)
+				{
+					if(Database.getInstance().users.get(i).equals(The_Reader.LoggedInUser))
+					{
+						Database.getInstance().users.get(i).followers.add(u);
+						Database.getInstance().addUserFollower(u,Database.getInstance().users.get(i));
+					}
+				}
+				
 				JOptionPane.showMessageDialog(null,"You Followed "+u.name+" Sucessfully");
 				
 			}
@@ -142,6 +149,7 @@ public class View_User_Window extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				
+				JOptionPane.showMessageDialog(null,u.followers.size());
 			}
 		});
 		button_4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/searchfriends.png")));

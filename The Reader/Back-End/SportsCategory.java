@@ -9,7 +9,7 @@ public class SportsCategory extends abstractCategory {
 	@Override
 	public void NotifyFollowers() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

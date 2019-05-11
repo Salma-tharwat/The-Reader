@@ -10,8 +10,7 @@ public class UserNotification extends Notification {
 
 	@Override
 	public void onclick() {
-		// TODO Auto-generated method stub
-		
+		View_User_Window view = new View_User_Window(user);
 	}
 
 	@Override

@@ -47,6 +47,6 @@ public class User {
 	
 	public void createdArticle(Article article){
 		createdArticles.add(article);
-		notifyFollowers(new articleNotification(MessageFormat.format("User {0} created article {1}", name, article.name), new NotSeenNotification(), article));
+		notifyFollowers(new ArticleNotification(MessageFormat.format("User {0} created article {1}", name, article.name), new NotSeenNotification(), article));
 	}
 }

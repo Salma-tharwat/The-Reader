@@ -42,99 +42,9 @@ public class Database {
 		users = getAllUsers();
 		comments = getAllComments();
 		notifications = getAllNotifications();
-	}
-
-	private ArrayList<Notification> getAllNotifications() {
-		try {
-			ArrayList<Notification> notifications = new ArrayList<Notification>();
-			getArticleNotifications(notifications);
-			getBookNotifications(notifications);
-			getUserNotifications(notifications);
-			return notifications;
-		} catch (Exception e) {
-			System.out.println(e);
-			return null;
-		}
-	}
-
-	private void getArticleNotifications(ArrayList<Notification> notifications) {
-		try {
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from article_notification");
-			while (rs.next()) {
-				int id = rs.getInt(1);
-				String content = rs.getString(2);
-				boolean state = rs.getBoolean(3);
-				NotificationState notificationState;
-				if (state)
-					notificationState = new SeenNotification();
-				else
-					notificationState = new NotSeenNotification();
-				String userName = rs.getString(4);
-				User user = getUser(userName);
-				int articleId = rs.getInt(5);
-				Article article = getArticle(articleId);
-				ArticleNotification articleNotification = new ArticleNotification(content, notificationState, article);
-				articleNotification.id = id;
-				notifications.add(articleNotification);
-				user.notifications.add(articleNotification);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	private void getBookNotifications(ArrayList<Notification> notifications) {
-		try {
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from book_notification");
-			while (rs.next()) {
-				int id = rs.getInt(1);
-				String content = rs.getString(2);
-				boolean state = rs.getBoolean(3);
-				NotificationState notificationState;
-				if (state)
-					notificationState = new SeenNotification();
-				else
-					notificationState = new NotSeenNotification();
-				String userName = rs.getString(4);
-				User user = getUser(userName);
-				int bookId = rs.getInt(5);
-				Book book = GetBook(bookId);
-				BookNotfication bookNotfication = new BookNotfication(content, notificationState, book);
-				bookNotfication.id = id;
-				notifications.add(bookNotfication);
-				user.notifications.add(bookNotfication);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-	private void getUserNotifications(ArrayList<Notification> notifications) {
-		try {
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from book_notification");
-			while (rs.next()) {
-				int id = rs.getInt(1);
-				String content = rs.getString(2);
-				boolean state = rs.getBoolean(3);
-				NotificationState notificationState;
-				if(state)
-					notificationState = new SeenNotification();
-				else
-					notificationState = new NotSeenNotification();
-				String userName = rs.getString(4);
-				User user = getUser(userName);
-				String redirectUserName = rs.getString(5);
-				User redirectUser = getUser(redirectUserName);
-				UserNotification userNotification = new UserNotification(content, notificationState, redirectUser);
-				notifications.add(userNotification);
-				user.notifications.add(userNotification);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		getArticleCategories();
+		getArticleComments();
+		getArticleFollowers();
 	}
 
 	private boolean initialize() {
@@ -236,6 +146,14 @@ public class Database {
 		}
 	}
 
+	public Category getCategory(String name) {
+		for (Category category : categories) {
+			if (category.name == name)
+				return category;
+		}
+		return null;
+	}
+
 	public Article getArticle(int id) {
 		for (Article article : articles) {
 			if (article.id == id)
@@ -287,6 +205,148 @@ public class Database {
 		}
 	}
 
+	private ArrayList<Notification> getAllNotifications() {
+		try {
+			ArrayList<Notification> notifications = new ArrayList<Notification>();
+			getArticleNotifications(notifications);
+			getBookNotifications(notifications);
+			getUserNotifications(notifications);
+			return notifications;
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+	}
+
+	private void getArticleNotifications(ArrayList<Notification> notifications) {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from article_notification");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String content = rs.getString(2);
+				boolean state = rs.getBoolean(3);
+				NotificationState notificationState;
+				if (state)
+					notificationState = new SeenNotification();
+				else
+					notificationState = new NotSeenNotification();
+				String userName = rs.getString(4);
+				User user = getUser(userName);
+				int articleId = rs.getInt(5);
+				Article article = getArticle(articleId);
+				ArticleNotification articleNotification = new ArticleNotification(content, notificationState, article);
+				articleNotification.id = id;
+				notifications.add(articleNotification);
+				user.notifications.add(articleNotification);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void getBookNotifications(ArrayList<Notification> notifications) {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from book_notification");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String content = rs.getString(2);
+				boolean state = rs.getBoolean(3);
+				NotificationState notificationState;
+				if (state)
+					notificationState = new SeenNotification();
+				else
+					notificationState = new NotSeenNotification();
+				String userName = rs.getString(4);
+				User user = getUser(userName);
+				int bookId = rs.getInt(5);
+				Book book = GetBook(bookId);
+				BookNotfication bookNotfication = new BookNotfication(content, notificationState, book);
+				bookNotfication.id = id;
+				notifications.add(bookNotfication);
+				user.notifications.add(bookNotfication);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void getUserNotifications(ArrayList<Notification> notifications) {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from book_notification");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String content = rs.getString(2);
+				boolean state = rs.getBoolean(3);
+				NotificationState notificationState;
+				if (state)
+					notificationState = new SeenNotification();
+				else
+					notificationState = new NotSeenNotification();
+				String userName = rs.getString(4);
+				User user = getUser(userName);
+				String redirectUserName = rs.getString(5);
+				User redirectUser = getUser(redirectUserName);
+				UserNotification userNotification = new UserNotification(content, notificationState, redirectUser);
+				notifications.add(userNotification);
+				user.notifications.add(userNotification);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void getArticleCategories() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from article_categories");
+			while(rs.next()) {
+				int articleId = rs.getInt(1);
+				String categoryName = rs.getString(2);
+				Article article = getArticle(articleId);
+				Category category = getCategory(categoryName);
+				article.categories.add(category);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void getArticleComments() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from article_comments");
+			while(rs.next()) {
+				int articleId = rs.getInt(1);
+				int commentId = rs.getInt(2);
+				Article article = getArticle(articleId);
+				AbstractComment comment = getComment(commentId);
+				article.comments.add((Comment)comment);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	
+	private void getArticleFollowers() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from article_followers");
+			while(rs.next()) {
+				int articleId = rs.getInt(1);
+				String userName = rs.getString(2);
+				Article article = getArticle(articleId);
+				User user = getUser(userName);
+				article.followers.add(user);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
 	public boolean addArticle(Article article) {
 		try {
 

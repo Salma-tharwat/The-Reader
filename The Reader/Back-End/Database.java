@@ -36,10 +36,10 @@ public class Database {
 
 		initialize();
 
+		users = getAllUsers();
 		articles = getAllArticles();
 		books = getAllBooks();
 		categories = getAllCategories();
-		users = getAllUsers();
 		comments = getAllComments();
 		notifications = getAllNotifications();
 		getArticleCategories();

@@ -185,7 +185,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addArticleFollower(Article article, User follower) {
 		try {
 
@@ -200,7 +200,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addArticleNotification(User user, ArticleNotification articleNotification) {
 		try {
 
@@ -208,7 +208,7 @@ public class Database {
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, articleNotification.id);
 			preparedStatement.setString(2, articleNotification.message);
-			if(articleNotification.IsSeen())
+			if (articleNotification.IsSeen())
 				preparedStatement.setBoolean(3, true);
 			else
 				preparedStatement.setBoolean(3, false);
@@ -221,7 +221,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addBook(Book book) {
 		try {
 
@@ -240,7 +240,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addBookCategory(Book book, Category category) {
 		try {
 
@@ -255,7 +255,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addBookComment(Book book, Comment comment) {
 		try {
 
@@ -270,7 +270,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addBookFollower(Book book, User user) {
 		try {
 
@@ -285,7 +285,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addBookNotification(User user, BookNotfication bookNotification) {
 		try {
 
@@ -293,7 +293,7 @@ public class Database {
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, bookNotification.id);
 			preparedStatement.setString(2, bookNotification.message);
-			if(bookNotification.IsSeen())
+			if (bookNotification.IsSeen())
 				preparedStatement.setBoolean(3, true);
 			else
 				preparedStatement.setBoolean(3, false);
@@ -306,7 +306,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addBookReader(User user, Book book) {
 		try {
 
@@ -321,7 +321,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addCategory(Category category) {
 		try {
 
@@ -335,7 +335,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addComment(Comment comment) {
 		try {
 
@@ -351,7 +351,7 @@ public class Database {
 			return false;
 		}
 	}
-	
+
 	public boolean addReply(Reply reply) {
 		try {
 
@@ -361,6 +361,73 @@ public class Database {
 			preparedStatement.setString(2, reply.content);
 			preparedStatement.setInt(3, reply.parent.id);
 			preparedStatement.setString(4, reply.user.userName);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+
+	public boolean addUser(User user) {
+		try {
+
+			String query = "INSERT INTO user (user_name, password, name) values(?, ?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, user.userName);
+			preparedStatement.setString(2, user.password);
+			preparedStatement.setString(3, user.name);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+
+	public boolean addUserCategory(User user, Category category) {
+		try {
+
+			String query = "INSERT INTO user_categories (user_name, category_name) values(?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, user.userName);
+			preparedStatement.setString(2, category.name);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+
+	public boolean addUserFollower(User followed, User follower) {
+		try {
+
+			String query = "INSERT INTO user_followers (followed_user, following_user) values(?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, followed.userName);
+			preparedStatement.setString(2, follower.userName);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+
+	public boolean addUserNotification(User user, UserNotification userNotification) {
+		try {
+
+			String query = "INSERT INTO user_notification (id, content, state, to_user, redirect_user) values(?, ?, ?, ?, ?);";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, userNotification.id);
+			preparedStatement.setString(2, userNotification.message);
+			if(userNotification.IsSeen())
+				preparedStatement.setBoolean(3, true);
+			else
+				preparedStatement.setBoolean(3, false);
+			preparedStatement.setString(4, user.userName);
+			preparedStatement.setString(5, userNotification.user.userName);
 			preparedStatement.executeUpdate();
 			return true;
 		} catch (Exception e) {

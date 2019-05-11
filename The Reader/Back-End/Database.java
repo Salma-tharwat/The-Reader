@@ -20,6 +20,7 @@ public class Database {
 	ArrayList<Category> categories;
 	ArrayList<User> users;
 	ArrayList<AbstractComment> comments;
+	ArrayList<Notification> notifications;
 
 	public static Database getInstance() {
 		if (database == null)
@@ -39,7 +40,101 @@ public class Database {
 		books = getAllBooks();
 		categories = getAllCategories();
 		users = getAllUsers();
-		comments = gettAllComments();
+		comments = getAllComments();
+		notifications = getAllNotifications();
+	}
+
+	private ArrayList<Notification> getAllNotifications() {
+		try {
+			ArrayList<Notification> notifications = new ArrayList<Notification>();
+			getArticleNotifications(notifications);
+			getBookNotifications(notifications);
+			getUserNotifications(notifications);
+			return notifications;
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+	}
+
+	private void getArticleNotifications(ArrayList<Notification> notifications) {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from article_notification");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String content = rs.getString(2);
+				boolean state = rs.getBoolean(3);
+				NotificationState notificationState;
+				if (state)
+					notificationState = new SeenNotification();
+				else
+					notificationState = new NotSeenNotification();
+				String userName = rs.getString(4);
+				User user = getUser(userName);
+				int articleId = rs.getInt(5);
+				Article article = getArticle(articleId);
+				ArticleNotification articleNotification = new ArticleNotification(content, notificationState, article);
+				articleNotification.id = id;
+				notifications.add(articleNotification);
+				user.notifications.add(articleNotification);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void getBookNotifications(ArrayList<Notification> notifications) {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from book_notification");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String content = rs.getString(2);
+				boolean state = rs.getBoolean(3);
+				NotificationState notificationState;
+				if (state)
+					notificationState = new SeenNotification();
+				else
+					notificationState = new NotSeenNotification();
+				String userName = rs.getString(4);
+				User user = getUser(userName);
+				int bookId = rs.getInt(5);
+				Book book = GetBook(bookId);
+				BookNotfication bookNotfication = new BookNotfication(content, notificationState, book);
+				bookNotfication.id = id;
+				notifications.add(bookNotfication);
+				user.notifications.add(bookNotfication);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void getUserNotifications(ArrayList<Notification> notifications) {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from book_notification");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String content = rs.getString(2);
+				boolean state = rs.getBoolean(3);
+				NotificationState notificationState;
+				if(state)
+					notificationState = new SeenNotification();
+				else
+					notificationState = new NotSeenNotification();
+				String userName = rs.getString(4);
+				User user = getUser(userName);
+				String redirectUserName = rs.getString(5);
+				User redirectUser = getUser(redirectUserName);
+				UserNotification userNotification = new UserNotification(content, notificationState, redirectUser);
+				notifications.add(userNotification);
+				user.notifications.add(userNotification);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	private boolean initialize() {
@@ -89,6 +184,14 @@ public class Database {
 		}
 	}
 
+	public Book GetBook(int id) {
+		for (Book book : books) {
+			if (book.id == id)
+				return book;
+		}
+		return null;
+	}
+
 	ArrayList<User> getAllUsers() {
 		try {
 			stmt = conn.createStatement();
@@ -105,9 +208,9 @@ public class Database {
 		}
 	}
 
-	User getUser(String user_name) {
+	User getUser(String userName) {
 		for (User user : users) {
-			if (user.userName == user_name)
+			if (user.userName == userName)
 				return user;
 		}
 		return null;
@@ -133,15 +236,23 @@ public class Database {
 		}
 	}
 
-	public AbstractComment GetComment(int id) {
-		for(AbstractComment comment : comments) {
-			if(comment.id == id)
+	public Article getArticle(int id) {
+		for (Article article : articles) {
+			if (article.id == id)
+				return article;
+		}
+		return null;
+	}
+
+	public AbstractComment getComment(int id) {
+		for (AbstractComment comment : comments) {
+			if (comment.id == id)
 				return comment;
 		}
 		return null;
 	}
 
-	private ArrayList<AbstractComment> gettAllComments() {
+	private ArrayList<AbstractComment> getAllComments() {
 		try {
 			ArrayList<AbstractComment> comments = new ArrayList<AbstractComment>();
 			stmt = conn.createStatement();
@@ -158,7 +269,7 @@ public class Database {
 					comments.add(new Comment(id, user, content));
 			}
 			rs = stmt.executeQuery("select * from comment");
-			while(rs.next()) {
+			while (rs.next()) {
 				boolean reply;
 				int id = rs.getInt(1);
 				String content = rs.getString(2);
@@ -167,7 +278,7 @@ public class Database {
 				String writer = rs.getString(4);
 				User user = getUser(writer);
 				if (reply)
-					comments.add(new Reply(id, user, content, GetComment(parent_id)));
+					comments.add(new Reply(id, user, content, getComment(parent_id)));
 			}
 			return comments;
 		} catch (Exception e) {

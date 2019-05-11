@@ -1,3 +1,4 @@
+import java.io.Console;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.*;
@@ -127,7 +128,7 @@ public class Database {
 
 	User getUser(String userName) {
 		for (User user : users) {
-			if (user.userName == userName)
+			if (user.userName.equals(userName))
 				return user;
 		}
 		return null;
@@ -157,7 +158,7 @@ public class Database {
 
 	public Category getCategory(String name) {
 		for (Category category : categories) {
-			if (category.name == name)
+			if (category.name.equals(name))
 				return category;
 		}
 		return null;

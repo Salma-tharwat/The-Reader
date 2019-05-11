@@ -22,8 +22,9 @@ public class User {
 		createdArticles = new ArrayList<Article>();
 	}
 
-	public void addFollower(User u) {
-		followers.add(u);
+	public boolean addFollower(User user) {
+		Database db = Database.getInstance();
+		return db.addUserFollower(this, user);
 	}
 
 	public void removeFollower(User u) {

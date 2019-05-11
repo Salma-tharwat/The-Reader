@@ -19,5 +19,11 @@ public class BookNotfication extends Notification {
 		//todo : get notfication id from database
 		return notification;
 	}
+
+	@Override
+	public boolean AddNotification(User user) {
+		Database db = Database.getInstance();
+		return db.addBookNotification(user, this);
+	}
 	
 }

@@ -26,6 +26,6 @@ public class Category {
 
 	public void notifyFollowers(Notification notification) {
 		for(User user : followers)
-			user.notify(notification.clone());
+			user.notify(notification);
 	}
 }

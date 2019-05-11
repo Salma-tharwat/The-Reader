@@ -20,4 +20,10 @@ public class ArticleNotification extends Notification {
 		return notification;
 	}
 
+	@Override
+	public boolean AddNotification(User user) {
+		Database db = Database.getInstance();
+		return db.addArticleNotification(user, this);
+	}
+
 }

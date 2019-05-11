@@ -12,7 +12,7 @@ public class Article extends Publication {
 
 	@Override
 	protected void notifyFollowers(Notification notification) {
-		for(User follower : followers)
+		for(User follower : followers) 
 			follower.notify(notification);
 	}
 

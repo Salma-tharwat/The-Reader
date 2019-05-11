@@ -9,7 +9,7 @@ public class Reply extends AbstractComment {
 	
 	@Override
 	public void notify(Notification notification) {
-		user.notify(notification.clone());
+		user.notify(notification);
 		parent.notify(notification);
 	}
 

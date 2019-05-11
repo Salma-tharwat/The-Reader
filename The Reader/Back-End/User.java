@@ -32,13 +32,13 @@ public class User {
 
 	public void notifyFollowers(Notification notification) {
 		for (User follower : followers) {
-			follower.notify(notification.clone());
+			follower.notify(notification);
 		}
 	}
 
 	public void notify(Notification notification) {
-		notifications.add(notification);
-		//add to database
+		Notification newNotification = notification.clone();
+		newNotification.AddNotification(this);
 	}
 
 	public void readBook(Book book) {

@@ -24,8 +24,8 @@ public class Category {
 		return followers.remove(user);
 	}
 
-	public void NotifyFollowers() {
+	public void notifyFollowers(Notification notification) {
 		for(User user : followers)
-			user.notify();
+			user.notify(notification.clone());
 	}
 }

@@ -11,8 +11,9 @@ public class Article extends Publication {
 	}
 
 	@Override
-	protected void NotifyFollowers() {
-		// TODO Auto-generated method stub
+	protected void notifyFollowers(Notification notification) {
+		for(User follower : followers)
+			follower.notify(notification);
 	}
 
 	@Override

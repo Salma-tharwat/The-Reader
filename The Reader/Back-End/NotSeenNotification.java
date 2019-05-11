@@ -6,5 +6,9 @@ public class NotSeenNotification implements NotificationState {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	@Override
+	public NotificationState clone() {
+		return new NotSeenNotification();
+	}
 }

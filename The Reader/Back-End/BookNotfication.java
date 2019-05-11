@@ -10,8 +10,13 @@ public class BookNotfication extends Notification {
 
 	@Override
 	public void onclick() {
-		// TODO Auto-generated method stub
-		
+		View_Book_Window view = new View_Book_Window(book);
+	}
+
+	@Override
+	public Notification clone() {
+		Notification notification = new BookNotfication(message, notificationState.clone(), book);
+		return notification;
 	}
 	
 }

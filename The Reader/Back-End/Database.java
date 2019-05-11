@@ -49,6 +49,7 @@ public class Database {
 		getBookComments();
 		getBookFollowers();
 		getBookReaders();
+		getUserCategories();
 	}
 
 	private boolean initialize() {
@@ -409,6 +410,22 @@ public class Database {
 				Book book = getBook(bookId);
 				User user = getUser(userName);
 				user.readBooks.add(book);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	private void getUserCategories() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from user_categories");
+			while(rs.next()) {
+				String userName = rs.getString(1);
+				String categoryName = rs.getString(2);
+				User user = getUser(userName);
+				Category category = getCategory(categoryName);
+				user.interests.add(category);
 			}
 		} catch (Exception e) {
 			System.out.println(e);

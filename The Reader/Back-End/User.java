@@ -30,7 +30,7 @@ public class User {
 		followers.remove(u);
 	}
 
-	private void notifyFollowers(Notification notification) {
+	public void notifyFollowers(Notification notification) {
 		for (User follower : followers) {
 			follower.notify(notification.clone());
 		}
@@ -38,15 +38,14 @@ public class User {
 
 	public void notify(Notification notification) {
 		notifications.add(notification);
+		//add to database
 	}
 
 	public void readBook(Book book) {
 		readBooks.add(book);
-		notifyFollowers(new BookNotfication(MessageFormat.format("User {0} read book {1}", name, book.name), new NotSeenNotification(), book) );
 	}
 	
 	public void createdArticle(Article article){
 		createdArticles.add(article);
-		notifyFollowers(new ArticleNotification(MessageFormat.format("User {0} created article {1}", name, article.name), new NotSeenNotification(), article));
 	}
 }

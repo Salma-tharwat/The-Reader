@@ -16,6 +16,7 @@ public class UserNotification extends Notification {
 	@Override
 	public Notification clone() {
 		Notification notification = new UserNotification(message, notificationState.clone(), user);
+		//todo : get notfication id from database
 		return notification;
 	}
 	

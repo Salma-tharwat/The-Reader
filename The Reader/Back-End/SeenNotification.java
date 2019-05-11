@@ -11,4 +11,9 @@ public class SeenNotification implements NotificationState {
 	public NotificationState clone() {
 		return new SeenNotification();
 	}
+
+	@Override
+	public boolean IsSeen() {
+		return true;
+	}
 }

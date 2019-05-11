@@ -2,11 +2,13 @@ import java.util.ArrayList;
 
 public abstract class AbstractComment {
 	
+	int id;
 	User user;
 	String content;
 	ArrayList<Comment> replies;
 
-	public AbstractComment(User user, String content) {
+	public AbstractComment(int id, User user, String content) {
+		this.id = id;
 		this.user = user;
 		this.content = content;
 	}

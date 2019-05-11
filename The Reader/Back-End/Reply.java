@@ -2,8 +2,8 @@
 public class Reply extends AbstractComment {
 	AbstractComment parent;
 
-	public Reply(User user, String content, AbstractComment parent) {
-		super(user, content);
+	public Reply(int id, User user, String content, AbstractComment parent) {
+		super(id, user, content);
 		this.parent = parent;
 	}
 	

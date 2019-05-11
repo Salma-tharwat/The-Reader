@@ -9,6 +9,11 @@ public abstract class Notification {
 		this.notificationState = notificationState;
 	}
 	
+	public boolean IsSeen()
+	{
+		return this.notificationState.IsSeen();
+	}
+	
 	public void setNotficationState(NotificationState notificationState)
 	{
 		this.notificationState = notificationState;
@@ -18,7 +23,7 @@ public abstract class Notification {
 	{
 		notificationState.getBackGroundColor();
 	}
-
+	
 	public abstract Notification clone();
 	
 	public abstract void onclick() ;

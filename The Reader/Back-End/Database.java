@@ -1,6 +1,7 @@
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.*;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 public class Database {
@@ -429,6 +430,7 @@ public class Database {
 				User user = getUser(userName);
 				Category category = getCategory(categoryName);
 				user.interests.add(category);
+				category.followers.add(user);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -465,6 +467,7 @@ public class Database {
 			
 			articles.add(article);
 			article.Writer.createdArticles.add(article);
+			article.Writer.notifyFollowers(new ArticleNotification(MessageFormat.format("User {0} add article {1}", article.Writer.name, article.name), new NotSeenNotification(), article));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -482,6 +485,7 @@ public class Database {
 			preparedStatement.executeUpdate();
 			
 			article.categories.add(category);
+			category.notifyFollowers(new ArticleNotification(MessageFormat.format("Article {0} added to category {1}", article.name, category.name), new NotSeenNotification(), article));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -499,6 +503,7 @@ public class Database {
 			preparedStatement.executeUpdate();
 			
 			article.comments.add(comment);
+			article.notifyFollowers(new ArticleNotification(MessageFormat.format("User {0} commented on article {1}", comment.user.userName, article.name), new NotSeenNotification(), article));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -578,6 +583,7 @@ public class Database {
 			preparedStatement.executeUpdate();
 			
 			book.categories.add(category);
+			category.notifyFollowers(new BookNotfication(MessageFormat.format("New Book {0} added to categeory {1}", book.name, category.name), new NotSeenNotification(), book));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -595,6 +601,7 @@ public class Database {
 			preparedStatement.executeUpdate();
 			
 			book.comments.add(comment);
+			book.notifyFollowers(new BookNotfication(MessageFormat.format("user {0} commented on book {1}", comment.user.userName, book.name), new NotSeenNotification(), book));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -653,6 +660,7 @@ public class Database {
 			preparedStatement.executeUpdate();
 			
 			user.readBooks.add(book);
+			user.notifyFollowers(new BookNotfication(MessageFormat.format("user {0} read new book {1}", user.userName, book.name), new NotSeenNotification(), book));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -705,6 +713,7 @@ public class Database {
 			preparedStatement.setString(4, reply.user.userName);
 			preparedStatement.executeUpdate();
 			
+			comments.add(reply);
 			AbstractComment mainComment = getComment(reply.parent.id);
 			mainComment.replies.add(reply);
 			return true;
@@ -741,6 +750,7 @@ public class Database {
 			preparedStatement.setString(2, category.name);
 			preparedStatement.executeUpdate();
 			
+			category.followers.add(user);
 			user.interests.add(category);
 			return true;
 		} catch (Exception e) {
@@ -759,6 +769,7 @@ public class Database {
 			preparedStatement.executeUpdate();
 			
 			followed.followers.add(follower);
+			follower.notifications.add(new UserNotification(MessageFormat.format("User {0} followed you", follower.userName), new NotSeenNotification(), follower));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);

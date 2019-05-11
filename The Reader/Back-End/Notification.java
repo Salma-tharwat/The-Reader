@@ -24,6 +24,8 @@ public abstract class Notification {
 		notificationState.getBackGroundColor();
 	}
 	
+	public abstract boolean AddNotification(User user);
+	
 	public abstract Notification clone();
 	
 	public abstract void onclick() ;

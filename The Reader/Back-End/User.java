@@ -22,8 +22,9 @@ public class User {
 		createdArticles = new ArrayList<Article>();
 	}
 
-	public void addFollower(User u) {
-		followers.add(u);
+	public boolean addFollower(User user) {
+		Database db = Database.getInstance();
+		return db.addUserFollower(this, user);
 	}
 
 	public void removeFollower(User u) {
@@ -32,20 +33,22 @@ public class User {
 
 	public void notifyFollowers(Notification notification) {
 		for (User follower : followers) {
-			follower.notify(notification.clone());
+			follower.notify(notification);
 		}
 	}
 
 	public void notify(Notification notification) {
-		notifications.add(notification);
-		//add to database
+		Notification newNotification = notification.clone();
+		newNotification.AddNotification(this);
 	}
 
-	public void readBook(Book book) {
-		readBooks.add(book);
+	public boolean readBook(Book book) {
+		Database db = Database.getInstance();
+		return db.addBookReader(this, book);
 	}
 	
-	public void createArticle(Article article){
-		createdArticles.add(article);
+	public boolean creatArticle(Article article){
+		Database db = Database.getInstance();
+		return db.addArticle(article);
 	}
 }

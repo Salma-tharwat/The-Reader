@@ -7,7 +7,7 @@ public class Comment extends AbstractComment {
 	
 	@Override
 	public void notify(Notification notification) {
-		user.notify(notification.clone());
+		user.notify(notification);
 	}
 
 }

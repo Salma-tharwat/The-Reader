@@ -20,13 +20,19 @@ public class Book extends Publication {
 	@Override
 	protected void notifyFollowers(Notification notification) {
 		for (User follower : followers)
-			follower.notify(notification.clone());
+			follower.notify(notification);
 	}
 
 	@Override
 	public void Render() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean addFollower(User user) {
+		Database db = Database.getInstance();
+		return db.addBookFollower(this, user);
 	}
 
 }

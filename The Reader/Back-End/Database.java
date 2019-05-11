@@ -143,6 +143,8 @@ public class Database {
 
 				Article a = new Article(rs.getInt(1), rs.getString(2), rs.getDate(3), getUser(rs.getString(5)),
 						content.getBytes(1, length));
+				User user = getUser(rs.getString(5));
+				user.createdArticles.add(a);
 				myArticles.add(a);
 			}
 			return myArticles;

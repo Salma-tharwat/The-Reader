@@ -42,11 +42,13 @@ public class User {
 		newNotification.AddNotification(this);
 	}
 
-	public void readBook(Book book) {
-		readBooks.add(book);
+	public boolean readBook(Book book) {
+		Database db = Database.getInstance();
+		return db.addBookReader(this, book);
 	}
 	
-	public void createdArticle(Article article){
-		createdArticles.add(article);
+	public boolean creatArticle(Article article){
+		Database db = Database.getInstance();
+		return db.addArticle(article);
 	}
 }

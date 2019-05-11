@@ -23,19 +23,8 @@ public abstract class Publication {
 		// TODO Auto-generated constructor stub
 	}
 
-	// add new follower
-	// true : follower added
-	// false : follower already exist
-	public boolean addFollower(User user) {
-		if (followers.contains(user))
-			return false;
-		followers.add(user);
-		return true;
-	}
+	public abstract boolean addFollower(User user);
 
-	// remove a follower
-	// true : follower removed
-	// false : follower doesn't exist
 	public boolean removeFollower(User user) {
 		return followers.remove(user);
 	}

@@ -29,4 +29,10 @@ public class Book extends Publication {
 
 	}
 
+	@Override
+	public boolean addFollower(User user) {
+		Database db = Database.getInstance();
+		return db.addBookFollower(this, user);
+	}
+
 }

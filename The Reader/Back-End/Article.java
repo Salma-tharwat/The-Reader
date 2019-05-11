@@ -21,4 +21,10 @@ public class Article extends Publication {
 		// TODO Auto-generated method stub
 	}
 
+	@Override
+	public boolean addFollower(User user) {
+		Database db = Database.getInstance();
+		return db.addArticleFollower(this, user);
+	}
+
 }

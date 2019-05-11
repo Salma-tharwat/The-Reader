@@ -45,6 +45,10 @@ public class Database {
 		getArticleCategories();
 		getArticleComments();
 		getArticleFollowers();
+		getBookCategories();
+		getBookComments();
+		getBookFollowers();
+		getBookReaders();
 	}
 
 	private boolean initialize() {
@@ -94,7 +98,7 @@ public class Database {
 		}
 	}
 
-	public Book GetBook(int id) {
+	public Book getBook(int id) {
 		for (Book book : books) {
 			if (book.id == id)
 				return book;
@@ -261,7 +265,7 @@ public class Database {
 				String userName = rs.getString(4);
 				User user = getUser(userName);
 				int bookId = rs.getInt(5);
-				Book book = GetBook(bookId);
+				Book book = getBook(bookId);
 				BookNotfication bookNotfication = new BookNotfication(content, notificationState, book);
 				bookNotfication.id = id;
 				notifications.add(bookNotfication);
@@ -347,6 +351,70 @@ public class Database {
 		}
 	}
 	
+	private void getBookCategories() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from book_categories");
+			while(rs.next()) {
+				int bookId = rs.getInt(1);
+				String categoryName = rs.getString(2);
+				Book book = getBook(bookId);
+				Category category = getCategory(categoryName);
+				book.categories.add(category);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	private void getBookComments() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from book_comments");
+			while(rs.next()) {
+				int bookId = rs.getInt(1);
+				int commentId = rs.getInt(2);
+				Book book = getBook(bookId);
+				AbstractComment comment = getComment(commentId);
+				book.comments.add((Comment)comment);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	private void getBookFollowers() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from book_followers");
+			while(rs.next()) {
+				int bookId = rs.getInt(1);
+				String userName = rs.getString(2);
+				Book book = getBook(bookId);
+				User user = getUser(userName);
+				book.followers.add(user);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	private void getBookReaders() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from book_readers");
+			while(rs.next()) {
+				int bookId = rs.getInt(1);
+				String userName = rs.getString(2);
+				Book book = getBook(bookId);
+				User user = getUser(userName);
+				user.readBooks.add(book);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
 	public boolean addArticle(Article article) {
 		try {
 
@@ -379,7 +447,7 @@ public class Database {
 			return false;
 		}
 	}
-
+	
 	public boolean addArticleComment(Article article, Comment comment) {
 		try {
 

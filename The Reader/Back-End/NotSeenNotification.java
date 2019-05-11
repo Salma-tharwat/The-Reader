@@ -11,4 +11,9 @@ public class NotSeenNotification implements NotificationState {
 	public NotificationState clone() {
 		return new NotSeenNotification();
 	}
+
+	@Override
+	public boolean IsSeen() {
+		return false;
+	}
 }

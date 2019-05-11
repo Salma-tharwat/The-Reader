@@ -31,12 +31,12 @@ public class Database {
 		username = "root";
 		password = "admin";
 		
-		if(initialize()) {
-			System.out.println("happy");
-		}
-		else {
-			System.out.println("SAD");
-		}
+		initialize();
+		
+		articles = getAllArticles();
+		books = getAllBooks();
+		categories = getAllCategories();
+		users = getAllUsers();
 	}
 	
 	private boolean initialize() {
@@ -74,7 +74,7 @@ public class Database {
 		
 	}
 	
-	ArrayList<Book>getAllBooks()
+	ArrayList<Book> getAllBooks()
 	{
 		try
 		{

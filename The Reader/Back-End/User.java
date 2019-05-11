@@ -45,7 +45,7 @@ public class User {
 		readBooks.add(book);
 	}
 	
-	public void createdArticle(Article article){
+	public void createArticle(Article article){
 		createdArticles.add(article);
 	}
 }

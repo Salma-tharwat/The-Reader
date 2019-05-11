@@ -2,32 +2,32 @@ import java.util.ArrayList;
 
 public class User 
 {
-	String Name;
-	String UserName;
-	String Password;
-	ArrayList<User> Followers;
-	ArrayList<abstractCategory> interests;
-	ArrayList<Notification> Notifications;
-	ArrayList<Book> Read_Books;
-	ArrayList<Article> Created_Articles;
+	String name;
+	String userName;
+	String password;
+	ArrayList<User> followers;
+	ArrayList<Category> interests;
+	ArrayList<Notification> notifications;
+	ArrayList<Book> readBooks;
+	ArrayList<Article> createdArticles;
 
 	public User(String name, String username, String password) {
-		Name = name;
-		UserName = username;
-		Password = password;
-		Followers = new ArrayList<User>();
-		Notifications = new ArrayList<Notification>();
-		interests = new ArrayList<abstractCategory>();
-		Read_Books = new ArrayList<Book>();
-		Created_Articles = new ArrayList<Article>();
+		name = name;
+		userName = username;
+		password = password;
+		followers = new ArrayList<User>();
+		notifications = new ArrayList<Notification>();
+		interests = new ArrayList<Category>();
+		readBooks = new ArrayList<Book>();
+		createdArticles = new ArrayList<Article>();
 	}
 
 	public void AddFollower(User u) {
-		Followers.add(u);
+		followers.add(u);
 	}
 
 	public void RemoveFollower(User u) {
-		Followers.remove(u);
+		followers.remove(u);
 	}
 
 	private void NotifyFollowers(Notification n) {

@@ -45,7 +45,7 @@ public class View_Book_Window extends JFrame {
 	}
     public void add_book(Book b,User u)
     {
-    	u.Read_Books.add(b);
+    	u.readBooks.add(b);
     }
 	/**
 	 * Create the frame.
@@ -129,25 +129,25 @@ public class View_Book_Window extends JFrame {
 		button_2.setBounds(508, 75, 140, 42);
 		contentPane.add(button_2);
 		
-		BookName = new JTextField(b.Name);
+		BookName = new JTextField(b.name);
 		BookName.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 20));
 		BookName.setBounds(20, 142, 288, 33);
 		contentPane.add(BookName);
 		BookName.setColumns(10);
 		
-		Author = new JTextField(b.Author);
+		Author = new JTextField(b.author);
 		Author.setFont(new Font("Traditional Arabic", Font.PLAIN, 18));
 		Author.setBounds(20, 204, 288, 33);
 		contentPane.add(Author);
 		Author.setColumns(10);
 		
-		textField = new JTextField(b.Date_published.toString());
+		textField = new JTextField(b.datePublished.toString());
 		textField.setFont(new Font("Traditional Arabic", Font.PLAIN, 16));
 		textField.setBounds(20, 262, 288, 33);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		link = new JTextField(b.Hyperlink);
+		link = new JTextField(b.hyperlink);
 		link.setFont(new Font("Traditional Arabic", Font.PLAIN, 16));
 		link.setBounds(332, 142, 220, 33);
 		contentPane.add(link);
@@ -160,7 +160,7 @@ public class View_Book_Window extends JFrame {
 		contentPane.add(lblCategory);
 		
 		DefaultListModel<String> l1 = new DefaultListModel<>();  
-        l1.addElement(b.categories.get(0).Name);
+        l1.addElement(b.categories.get(0).name);
         JList<String> list = new JList<>(l1);
 		list.setFont(new Font("Traditional Arabic", Font.PLAIN, 16));
 		list.setBounds(704, 148, 129, 188);

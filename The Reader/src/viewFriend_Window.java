@@ -111,7 +111,7 @@ public class viewFriend_Window extends JFrame {
 		lblNewLabel_1.setBounds(10, 140, 102, 33);
 		contentPane.add(lblNewLabel_1);
 		
-		textField = new JTextField(u2.Name);
+		textField = new JTextField(u2.name);
 		textField.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
 		textField.setBounds(77, 139, 233, 33);
 		contentPane.add(textField);

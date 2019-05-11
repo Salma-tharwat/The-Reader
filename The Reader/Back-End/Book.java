@@ -1,25 +1,20 @@
-import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Date;
 
 public class Book extends Publication {
-	String Hyperlink;
-	String Author;
-	String Description;
+	String hyperlink;
+	String author;
+	String description;
 
-	public Book(String n, java.util.Date d, ArrayList<abstractCategory> arrayList, String desc, String link,
-			String Author) {
-		super(n, d, arrayList);
-		Hyperlink = link;
-		Description = desc;
-		this.Author = Author;
-		categories.add(new SportsCategory("Sports"));
-		// TODO Auto-generated constructor stub
+	public Book(int id, String name, Date datePublished, String Author, String hyperlink, String description) {
+		super(id, name, datePublished);
+		this.author = Author;
+		this.description = description;
+		this.hyperlink = hyperlink;
 	}
 
 	@Override
-	public void NotifyFollowers() {
+	protected void NotifyFollowers() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

@@ -1,14 +1,23 @@
 
-public class Notification {
-	String Message;
-
-	public Notification(String Message) {
-		this.Message = Message;
-
+public abstract class Notification {
+	String message;
+	NotificationState notificationState;
+	
+	public Notification(String message, NotificationState notificationState) {
+		this.message = message;
+		this.notificationState = notificationState;
+	}
+	
+	public void setNotficationState(NotificationState notificationState)
+	{
+		this.notificationState = notificationState;
+	}
+	
+	public void getBackGroundColor()
+	{
+		notificationState.getBackGroundColor();
 	}
 
-	public void onclick() {
-
-	}
+	public abstract void onclick() ;
 
 }

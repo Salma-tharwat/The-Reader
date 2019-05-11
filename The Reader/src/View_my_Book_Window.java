@@ -36,7 +36,7 @@ public class View_my_Book_Window extends JFrame {
 					Date d=new Date();
 					d.setMonth(2);
 					d.setYear(2010);
-					View_my_Book_Window frame = new View_my_Book_Window (new Book("Champions",d,new ArrayList<abstractCategory>(),"Sports Book ","","Abo Treka"));
+					View_my_Book_Window frame = new View_my_Book_Window (new Book(1, "Champions", d, "Abo Treka", "", "Sports Book"));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,13 +56,13 @@ public class View_my_Book_Window extends JFrame {
 	public void displayBook(Book b)
 	{
 		
-		Name = new JTextField(b.Name);
+		Name = new JTextField(b.name);
 		Name.setFont(new Font("Traditional Arabic", Font.BOLD | Font.ITALIC, 24));
 		Name.setBounds(10, 139, 277, 29);
 		contentPane.add(Name);
 		Name.setColumns(10);
 		
-		Date = new JTextField(b.Date_published.toString());
+		Date = new JTextField(b.datePublished.toString());
 		Date.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
 		Date.setBounds(10, 245, 277, 33);
 		contentPane.add(Date);
@@ -82,20 +82,20 @@ public class View_my_Book_Window extends JFrame {
 		contentPane.add(lblNewLabel_3);
 		
 		DefaultListModel<String> l1 = new DefaultListModel<>();  
-        l1.addElement(b.categories.get(0).Name);
+        l1.addElement(b.categories.get(0).name);
         JList<String> list = new JList<>(l1);
 		list.setFont(new Font("Traditional Arabic", Font.PLAIN, 16));
 		list.setBounds(618, 168, 129, 168);
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		contentPane.add(list);
 		
-		Author = new JTextField(b.Author);
+		Author = new JTextField(b.author);
 		Author.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
 		Author.setBounds(10, 189, 277, 33);
 		contentPane.add(Author);
 		Author.setColumns(10);
 		
-		Link = new JTextField(b.Hyperlink);
+		Link = new JTextField(b.hyperlink);
 		Link.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
 		Link.setBounds(322, 138, 247, 33);
 		contentPane.add(Link);
@@ -107,7 +107,7 @@ public class View_my_Book_Window extends JFrame {
 		lblNewLabel_6.setBounds(10, 307, 140, 29);
 		contentPane.add(lblNewLabel_6);
 		
-		textField_4 = new JTextField(b.Description);
+		textField_4 = new JTextField(b.description);
 		textField_4.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
 		textField_4.setBounds(135, 303, 404, 37);
 		contentPane.add(textField_4);
@@ -121,7 +121,7 @@ public class View_my_Book_Window extends JFrame {
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	public View_my_Book_Window(Book b)
 	{
-		b.categories.add(new SportsCategory("Sports"));
+		b.categories.add(new Category("Sports"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 806, 502);
 		contentPane = new JPanel();

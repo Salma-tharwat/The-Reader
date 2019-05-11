@@ -1,20 +1,18 @@
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 public class Article extends Publication {
-	ArrayList<String> Content = new ArrayList<String>();
+	ArrayList<Byte> content;
 	User Writer;
 
-	public Article(String n, Date date, ArrayList<abstractCategory> categories, ArrayList<String> file) {
-		super(n, date, categories);
-		Content = file;
-		// TODO Auto-generated constructor stub
+	public Article(int id, String name, Date date, User writer, ArrayList<Byte> file) {
+		super(id, name, date);
+		content = file;
 	}
 
 	@Override
-	public void NotifyFollowers() {
+	protected void NotifyFollowers() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

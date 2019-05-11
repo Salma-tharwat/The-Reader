@@ -6,7 +6,7 @@ public abstract class Publication {
 	protected String name;
 	Date datePublished;
 	protected ArrayList<User> followers;
-	ArrayList<Comment> comments;
+	ArrayList<AbstractComment> comments;
 	ArrayList<Category> categories;
 
 	public Publication(int id, String name, Date datePublished) {
@@ -14,7 +14,7 @@ public abstract class Publication {
 		this.name = name;
 		this.datePublished = datePublished;
 		followers = new ArrayList<User>();
-		comments = new ArrayList<Comment>();
+		comments = new ArrayList<AbstractComment>();
 		categories = new ArrayList<Category>();
 
 	}

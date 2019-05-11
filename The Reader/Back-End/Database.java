@@ -19,6 +19,7 @@ public class Database {
 	ArrayList<Book> books;
 	ArrayList<Category> categories;
 	ArrayList<User> users;
+	ArrayList<AbstractComment> comments;
 
 	public static Database getInstance() {
 		if (database == null)
@@ -38,6 +39,7 @@ public class Database {
 		books = getAllBooks();
 		categories = getAllCategories();
 		users = getAllUsers();
+		comments = gettAllComments();
 	}
 
 	private boolean initialize() {
@@ -104,18 +106,11 @@ public class Database {
 	}
 
 	User getUser(String user_name) {
-		try {
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from User where user_name = '" + user_name + "'");
-			User user = null;
-			while (rs.next()) {
-				user = new User(rs.getString(3), rs.getString(1), rs.getString(2));
-			}
-			return user;
-		} catch (Exception e) {
-			System.out.println(e);
-			return null;
+		for (User user : users) {
+			if (user.userName == user_name)
+				return user;
 		}
+		return null;
 	}
 
 	ArrayList<Article> getAllArticles() {
@@ -132,6 +127,49 @@ public class Database {
 				myArticles.add(a);
 			}
 			return myArticles;
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+	}
+
+	public AbstractComment GetComment(int id) {
+		for(AbstractComment comment : comments) {
+			if(comment.id == id)
+				return comment;
+		}
+		return null;
+	}
+
+	private ArrayList<AbstractComment> gettAllComments() {
+		try {
+			ArrayList<AbstractComment> comments = new ArrayList<AbstractComment>();
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from comment");
+			while (rs.next()) {
+				boolean reply;
+				int id = rs.getInt(1);
+				String content = rs.getString(2);
+				int parent_id = rs.getInt(3);
+				reply = rs.wasNull();
+				String writer = rs.getString(4);
+				User user = getUser(writer);
+				if (!reply)
+					comments.add(new Comment(id, user, content));
+			}
+			rs = stmt.executeQuery("select * from comment");
+			while(rs.next()) {
+				boolean reply;
+				int id = rs.getInt(1);
+				String content = rs.getString(2);
+				int parent_id = rs.getInt(3);
+				reply = rs.wasNull();
+				String writer = rs.getString(4);
+				User user = getUser(writer);
+				if (reply)
+					comments.add(new Reply(id, user, content, GetComment(parent_id)));
+			}
+			return comments;
 		} catch (Exception e) {
 			System.out.println(e);
 			return null;
@@ -422,7 +460,7 @@ public class Database {
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, userNotification.id);
 			preparedStatement.setString(2, userNotification.message);
-			if(userNotification.IsSeen())
+			if (userNotification.IsSeen())
 				preparedStatement.setBoolean(3, true);
 			else
 				preparedStatement.setBoolean(3, false);

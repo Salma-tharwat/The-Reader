@@ -48,6 +48,7 @@ public class Database {
 		getBookCategories();
 		getBookComments();
 		getBookFollowers();
+		getBookReaders();
 	}
 
 	private boolean initialize() {
@@ -392,6 +393,22 @@ public class Database {
 				Book book = getBook(bookId);
 				User user = getUser(userName);
 				book.followers.add(user);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	private void getBookReaders() {
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from book_readers");
+			while(rs.next()) {
+				int bookId = rs.getInt(1);
+				String userName = rs.getString(2);
+				Book book = getBook(bookId);
+				User user = getUser(userName);
+				user.readBooks.add(book);
 			}
 		} catch (Exception e) {
 			System.out.println(e);

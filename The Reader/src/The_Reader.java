@@ -4,6 +4,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Panel;
 import java.awt.Canvas;
@@ -22,6 +23,7 @@ public class The_Reader {
 	public JFrame frame;
 	private JTextField usernametxt;
 	private JPasswordField Passwordtxt;
+	public static User LoggedInUser;
 
 	/**
 	 * Launch the application.
@@ -64,6 +66,31 @@ public class The_Reader {
 		frame.getContentPane().add(label);
 		
 		JButton login = new JButton("Login");
+	      login.addActionListener(new ActionListener()
+	      {
+			public void actionPerformed(ActionEvent e)
+			{
+				boolean loggedin=false;
+				for(int i=0;i<Database.getInstance().users.size();i++)
+				{
+					if(usernametxt.getText().equals(Database.getInstance().users.get(i).userName) && Passwordtxt.getText().equals(Database.getInstance().users.get(i).password))
+							{
+						        LoggedInUser=Database.getInstance().users.get(i);
+						       JOptionPane.showMessageDialog(null, "Logged In Sucessfully !!");
+						       loggedin=true;
+						       frame.dispose();
+				              UserProfile  sup=new UserProfile(LoggedInUser);
+				               sup.setVisible(true);
+				               
+				               break;
+							}
+				}
+				if(!loggedin)
+				{
+					JOptionPane.showMessageDialog(null, "UserName or Password Incorrect");
+				}
+			}
+	      });
 		login.setForeground(Color.DARK_GRAY);
 		login.setFocusPainted(false);
 		login.setContentAreaFilled(false);

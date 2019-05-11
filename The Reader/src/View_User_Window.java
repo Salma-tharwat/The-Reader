@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -58,6 +60,15 @@ public class View_User_Window extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btn_add = new JButton("New button");
+		btn_add.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				The_Reader.LoggedInUser.followers.add(u);
+				Database.getInstance().addUserFollower(u,The_Reader.LoggedInUser);
+				JOptionPane.showMessageDialog(null,"You Followed "+u.name+" Sucessfully");
+				
+			}
+		});
 		btn_add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.jpg")));
 		btn_add.setBorderPainted(false);
 		btn_add.setFocusPainted(false);
@@ -86,7 +97,7 @@ public class View_User_Window extends JFrame {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				UserProfile.Display_Read_Books(u);
+				UserProfile.Display_Read_Books(The_Reader.LoggedInUser);
 			}
 		});
 		button_1.setOpaque(false);
@@ -101,7 +112,7 @@ public class View_User_Window extends JFrame {
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				UserProfile up=new UserProfile(u);
+				UserProfile up=new UserProfile(The_Reader.LoggedInUser);
 				up.setVisible(true);
 				frame.dispose();
 			}
@@ -120,7 +131,7 @@ public class View_User_Window extends JFrame {
 		label.setBounds(10, 137, 102, 33);
 		contentPane.add(label);
 		
-		textField = new JTextField((String) null);
+		textField = new JTextField(u.name);
 		textField.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));
 		textField.setColumns(10);
 		textField.setBounds(79, 137, 233, 33);

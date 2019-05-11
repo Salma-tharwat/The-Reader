@@ -92,11 +92,22 @@ public class SignUp extends JFrame
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Welcome to The Reader !! ..");
-				User u=new User(textField.getText(),textField_1.getText(),passwordField.getText());
+					User u=new User(textField.getText(),textField_1.getText(),passwordField.getText().toString());
+					boolean added=Database.getInstance().addUser(u);
+					Database.getInstance().users.add(u);
+					if(added)
+					{
+						JOptionPane.showMessageDialog(null, "Welcome to The Reader !! ..");
+				The_Reader.LoggedInUser=u;
 				UserProfile up=new UserProfile(u);
+				
 				up.setVisible(true);
 				frame.dispose();
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "try again");
+					}
 				}
 				
 				

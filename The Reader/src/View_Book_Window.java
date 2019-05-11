@@ -25,7 +25,7 @@ public class View_Book_Window extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static View_Book_Window frame = new View_Book_Window(UserProfile.b);
+	public static View_Book_Window frame = new View_Book_Window(new Book());
 	private JTextField BookName;
 	private JTextField Author;
 	private JTextField textField;
@@ -73,7 +73,7 @@ public class View_Book_Window extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				add_book(UserProfile.b,UserProfile.u);
+				//add_book(UserProfile.b,The_Reader.LoggedInUser);
 			}
 		});
 		btnNewButton.setBounds(732, 11, 111, 91);
@@ -101,7 +101,7 @@ public class View_Book_Window extends JFrame {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				UserProfile.Display_Read_Books(UserProfile.u);
+				UserProfile.Display_Read_Books(The_Reader.LoggedInUser);
 			}
 		});
 		button_1.setOpaque(false);
@@ -116,7 +116,7 @@ public class View_Book_Window extends JFrame {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				UserProfile up=new UserProfile(UserProfile.u);
+				UserProfile up=new UserProfile(The_Reader.LoggedInUser);
 						up.setVisible(true);
 						frame.dispose();
 			}

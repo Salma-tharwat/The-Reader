@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JScrollBar;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.awt.event.ActionEvent;
 
 public class Add_Book extends JFrame {
@@ -26,7 +27,7 @@ public class Add_Book extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-
+	public static Add_Book frame = new Add_Book();
 	/**
 	 * Launch the application.
 	 */
@@ -34,7 +35,7 @@ public class Add_Book extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Add_Book frame = new Add_Book();
+					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -130,7 +131,23 @@ public class Add_Book extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				JOptionPane.showMessageDialog(null, "Book Added");
+				Date d=new Date(23,11, 2010);
+				Book b = new Book( 123,textField.getText(),d,textField_1.getText(), textField_3.getText(), "");
+				boolean added =Database.getInstance().addBook(b);
+				Database.getInstance().books.add(b);
+				if(added)
+				{
+					JOptionPane.showMessageDialog(null, "Book Added");
+					Admin_Panel ap=new Admin_Panel();
+					ap.setVisible(true);
+					frame.dispose();
+				}
+				else
+				{
+
+					JOptionPane.showMessageDialog(null, "Try Again");
+				}
+				
 			}
 		});
 		btnNewButton.setFont(new Font("Traditional Arabic", Font.PLAIN, 20));

@@ -19,6 +19,10 @@ public abstract class Publication {
 
 	}
 
+	public Publication() {
+		// TODO Auto-generated constructor stub
+	}
+
 	// add new follower
 	// true : follower added
 	// false : follower already exist

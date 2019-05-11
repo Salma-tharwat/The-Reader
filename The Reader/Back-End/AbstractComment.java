@@ -5,12 +5,13 @@ public abstract class AbstractComment {
 	int id;
 	User user;
 	String content;
-	ArrayList<Comment> replies;
+	ArrayList<AbstractComment> replies;
 
 	public AbstractComment(int id, User user, String content) {
 		this.id = id;
 		this.user = user;
 		this.content = content;
+		replies = new ArrayList<AbstractComment>();
 	}
 
 	public String getContent() {
@@ -21,7 +22,7 @@ public abstract class AbstractComment {
 		return user;
 	}
 
-	public void addReply(Comment reply) {
+	public void addReply(AbstractComment reply) {
 		replies.add(reply);
 	}
 

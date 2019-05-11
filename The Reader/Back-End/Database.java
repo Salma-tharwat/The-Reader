@@ -801,4 +801,96 @@ public class Database {
 			return false;
 		}
 	}
+	
+	public int getNextBookId()
+	{
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select max(id) from book");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				id++;
+				return id;
+			}
+			return 1;
+		} catch (Exception e) {
+			System.out.println(e);
+			return 1;
+		}
+	}
+	
+	public int getNextArticleId()
+	{
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select max(id) from artilce");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				id++;
+				return id;
+			}
+			return 1;
+		} catch (Exception e) {
+			System.out.println(e);
+			return 1;
+		}
+	}
+	
+	public int getNextNotificationId()
+	{
+		int a = getMaxArticleNotification();
+		int b = getMaxBookNotification();
+		int c = getMaxUserNotification();
+		
+		int maxID = Math.max(a, Math.max(b, c));
+		return maxID + 1;
+	}
+
+	private int getMaxBookNotification()
+	{
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select max(id) from book_notification");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				return id;
+			}
+			return 0;
+		} catch (Exception e) {
+			System.out.println(e);
+			return 0;
+		}
+	}
+	
+	private int getMaxArticleNotification()
+	{
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select max(id) from article_notification");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				return id;
+			}
+			return 0;
+		} catch (Exception e) {
+			System.out.println(e);
+			return 0;
+		}
+	}
+	
+	private int getMaxUserNotification()
+	{
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select max(id) from user_notification");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				return id;
+			}
+			return 0;
+		} catch (Exception e) {
+			System.out.println(e);
+			return 0;
+		}
+	}
 }

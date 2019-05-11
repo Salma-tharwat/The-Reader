@@ -16,6 +16,7 @@ public class BookNotfication extends Notification {
 	@Override
 	public Notification clone() {
 		Notification notification = new BookNotfication(message, notificationState.clone(), book);
+		//todo : get notfication id from database
 		return notification;
 	}
 	

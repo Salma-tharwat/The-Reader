@@ -1,5 +1,6 @@
 
 public abstract class Notification {
+	int id;
 	String message;
 	NotificationState notificationState;
 	

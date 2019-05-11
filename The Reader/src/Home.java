@@ -61,24 +61,35 @@ public class Home extends JFrame {
         int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS; 
         JScrollPane jsp=new JScrollPane(panel,v,h);
         jsp.setBounds(relative.getLocation().x, relative.getLocation().y,500, 250);
-		for(int i=0;i<20;i++)
+        JButton result = new JButton("");
+		 result.setOpaque(false);
+		 result.setContentAreaFilled(false);
+		 result.setBorderPainted(false);
+		 panel.add(result);
+		for(int i=0;i<Database.getInstance().users.size();i++)
 		{
-			 JButton result1 = new JButton(Name);
-			 result1.setOpaque(false);
-			 result1.setContentAreaFilled(false);
-			 result1.setBorderPainted(false);
-			 panel.add(result1);
-			
-			 result1.addActionListener(new ActionListener()
-			 {  
-					 public void actionPerformed(ActionEvent e)
-					 {  
-						 UserProfile up=new UserProfile(new User("Salma Tharwat ","Salma123","1235"));
-						 up.setVisible(true);
-						 Home.frame.dispose();
-					 }  
-			 }
-			 ); 
+			User current=Database.getInstance().users.get(i);
+			if(Database.getInstance().users.get(i).name.equals(Name))
+{
+				JButton result1 = new JButton(Database.getInstance().users.get(i).name);
+				 result1.setOpaque(false);
+				 result1.setContentAreaFilled(false);
+				 result1.setBorderPainted(false);
+				 panel.add(result1);
+				
+				 result1.addActionListener(new ActionListener()
+				 {  
+						 public void actionPerformed(ActionEvent e)
+						 {  
+							 JOptionPane.showMessageDialog(null,current.name);
+							 View_User_Window up=new View_User_Window(current);
+							 up.setVisible(true);
+							 Home.frame.dispose();
+						 }  
+				 }
+				 );
+}
+ 
 		}
 		     frame.getContentPane().add(jsp);
 			//frame.setSize(500, 250 );  

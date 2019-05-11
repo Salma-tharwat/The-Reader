@@ -26,7 +26,7 @@ public class viewFriend_Window extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					viewFriend_Window frame = new viewFriend_Window(new User("Ahmed","Ahmd","1234"));
+					viewFriend_Window frame = new viewFriend_Window(The_Reader.LoggedInUser);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -85,7 +85,7 @@ public class viewFriend_Window extends JFrame {
 		JButton btnMyProfile = new JButton("My Profile");
 		btnMyProfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UserProfile up=new UserProfile(UserProfile.u);
+				UserProfile up=new UserProfile(The_Reader.LoggedInUser);
 				up.setVisible(true);
 			}
 		});

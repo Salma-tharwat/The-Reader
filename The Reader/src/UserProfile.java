@@ -38,7 +38,7 @@ public class UserProfile extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static UserProfile frame = new UserProfile(new User("Ahmed","Ahmd","1234"));
+	public static UserProfile frame = new UserProfile(The_Reader.LoggedInUser);
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -99,14 +99,15 @@ public class UserProfile extends JFrame {
     	// panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     	for(int i=0;i<u.createdArticles.size();i++)
     	{
+    		
     		 JButton article1 = new JButton(u.createdArticles.get(i).name);
     		    article1.setOpaque(false);
     			article1.setContentAreaFilled(false);
     			article1.setBorderPainted(false);
     			article1.addActionListener(new ActionListener(){  
     				 public void actionPerformed(ActionEvent e){  
-    					 View_my_Book_Window  vb=new View_my_Book_Window (b);
-    				             vb.setVisible(true);
+    					 //View_my_Book_Window  vb=new View_my_Book_Window (b);
+    				             //vb.setVisible(true);
     				         }  
     				     });  
     		 panel.add(article1);
@@ -127,11 +128,12 @@ public static void Display_Read_Books(User u) // function that takes a user and 
     int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS; 
     JScrollPane jsp=new JScrollPane(panel,v,h);
     jsp.setBounds(reference.getLocation().x, reference.getLocation().y,500, 250);
-	u.readBooks.add(b);
+	
 	//JOptionPane.showMessageDialog(null, u.Read_Books.get(0).Name);
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	for(int i=0;i<u.readBooks.size();i++)
 	{
+		Book b =u.readBooks.get(i);
 		 JButton Book1 = new JButton(u.readBooks.get(i).name);
 		    Book1.setOpaque(false);
 			Book1.setContentAreaFilled(false);
@@ -154,21 +156,10 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/**
-	 * Create the frame.
-	 */
-    //////////dummy data for testing ///////////
-	 public static User u=new User("Ahmed","Ahmd","1234");
-	User u2=new User("Mohammed","m7md","12345");
-	User u3=new User("Emad","E123","12345");
-	static Date d=new Date();
-	static Book b=new Book(1, "Champions", d, "Abo Treka", "", "Sports Book ");
 	
-	/////////////////////////////////////////////
 	public UserProfile( User u) 
 	{
-		u.followers.add(u2);
-		u.followers.add(u3);
+		
 		User U1= new User("Ahmed","Ahmed_123","12345");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 867, 520);

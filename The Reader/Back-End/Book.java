@@ -12,6 +12,11 @@ public class Book extends Publication {
 		this.hyperlink = hyperlink;
 	}
 
+	public Book() {
+		// TODO Auto-generated constructor stub
+		super();
+	}
+
 	@Override
 	protected void notifyFollowers(Notification notification) {
 		for (User follower : followers)

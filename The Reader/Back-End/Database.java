@@ -429,6 +429,7 @@ public class Database {
 				User user = getUser(userName);
 				Category category = getCategory(categoryName);
 				user.interests.add(category);
+				category.followers.add(user);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -705,6 +706,7 @@ public class Database {
 			preparedStatement.setString(4, reply.user.userName);
 			preparedStatement.executeUpdate();
 			
+			comments.add(reply);
 			AbstractComment mainComment = getComment(reply.parent.id);
 			mainComment.replies.add(reply);
 			return true;
@@ -741,6 +743,7 @@ public class Database {
 			preparedStatement.setString(2, category.name);
 			preparedStatement.executeUpdate();
 			
+			category.followers.add(user);
 			user.interests.add(category);
 			return true;
 		} catch (Exception e) {

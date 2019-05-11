@@ -22,9 +22,5 @@ public abstract class AbstractComment {
 		return user;
 	}
 
-	public void addReply(AbstractComment reply) {
-		replies.add(reply);
-	}
-
 	public abstract void notify(Notification notification);
 }

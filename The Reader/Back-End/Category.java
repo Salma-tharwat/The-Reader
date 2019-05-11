@@ -13,10 +13,8 @@ public class Category {
 	}
 
 	public boolean addFollower(User user) {
-		if (followers.contains(user))
-			return false;
-		followers.add(user);
-		return true;
+		Database db = Database.getInstance();
+		return db.addUserCategory(user, this);
 	}
 
 	public boolean removeFollower(User user)

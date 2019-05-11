@@ -2,10 +2,10 @@ import java.util.Date;
 import java.util.ArrayList;
 
 public class Article extends Publication {
-	ArrayList<Byte> content;
+	byte[] content;
 	User Writer;
 
-	public Article(int id, String name, Date date, User writer, ArrayList<Byte> file) {
+	public Article(int id, String name, Date date, User writer, byte[] file) {
 		super(id, name, date);
 		content = file;
 	}

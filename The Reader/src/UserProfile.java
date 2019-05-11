@@ -62,13 +62,13 @@ public class UserProfile extends JFrame {
         jsp.setBounds(reference.getLocation().x, reference.getLocation().y,500, 250);
     	//JOptionPane.showMessageDialog(null, u.Read_Books.get(0).Name);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    	for(int i=0;i<u.Followers.size();i++)
+    	for(int i=0;i<u.followers.size();i++)
     	{
-    		 JButton Book1 = new JButton(u.Followers.get(i).Name);
+    		 JButton Book1 = new JButton(u.followers.get(i).name);
     		    Book1.setOpaque(false);
     			Book1.setContentAreaFilled(false);
     			Book1.setBorderPainted(false);
-    			User u2=u.Followers.get(i);
+    			User u2=u.followers.get(i);
     			 Book1.addActionListener(new ActionListener(){  
     				 public void actionPerformed(ActionEvent e)
     				 {  
@@ -97,9 +97,9 @@ public class UserProfile extends JFrame {
     	JLabel label = new JLabel(" Articles  "); 
     	panel.add(label);  
     	// panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    	for(int i=0;i<u.Created_Articles.size();i++)
+    	for(int i=0;i<u.createdArticles.size();i++)
     	{
-    		 JButton article1 = new JButton(u.Created_Articles.get(i).Name);
+    		 JButton article1 = new JButton(u.createdArticles.get(i).name);
     		    article1.setOpaque(false);
     			article1.setContentAreaFilled(false);
     			article1.setBorderPainted(false);
@@ -127,12 +127,12 @@ public static void Display_Read_Books(User u) // function that takes a user and 
     int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS; 
     JScrollPane jsp=new JScrollPane(panel,v,h);
     jsp.setBounds(reference.getLocation().x, reference.getLocation().y,500, 250);
-	u.Read_Books.add(b);
+	u.readBooks.add(b);
 	//JOptionPane.showMessageDialog(null, u.Read_Books.get(0).Name);
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	for(int i=0;i<u.Read_Books.size();i++)
+	for(int i=0;i<u.readBooks.size();i++)
 	{
-		 JButton Book1 = new JButton(u.Read_Books.get(i).Name);
+		 JButton Book1 = new JButton(u.readBooks.get(i).name);
 		    Book1.setOpaque(false);
 			Book1.setContentAreaFilled(false);
 			Book1.setBorderPainted(false);
@@ -162,13 +162,13 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 	User u2=new User("Mohammed","m7md","12345");
 	User u3=new User("Emad","E123","12345");
 	static Date d=new Date();
-	static Book b=new Book("Champions",d,new ArrayList<abstractCategory>(),"Sports Book ","","Abo Treka");
+	static Book b=new Book(1, "Champions", d, "Abo Treka", "", "Sports Book ");
 	
 	/////////////////////////////////////////////
 	public UserProfile( User u) 
 	{
-		u.Followers.add(u2);
-		u.Followers.add(u3);
+		u.followers.add(u2);
+		u.followers.add(u3);
 		User U1= new User("Ahmed","Ahmed_123","12345");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 867, 520);
@@ -271,7 +271,7 @@ public static void Display_Read_Books(User u) // function that takes a user and 
 		comboBox.setBounds(646, 82, 195, 32);
 		contentPane.add(comboBox);
 		
-		JLabel welcomelabel = new JLabel("Welcome  " + u.Name);
+		JLabel welcomelabel = new JLabel("Welcome  " + u.name);
 		welcomelabel.setForeground(Color.DARK_GRAY);
 		welcomelabel.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		welcomelabel.setBounds(10, 125, 319, 33);

@@ -65,14 +65,15 @@ public class View_User_Window extends JFrame {
 			{
 				for(int i=0;i<Database.getInstance().users.size();i++)
 				{
-					if(Database.getInstance().users.get(i).equals(The_Reader.LoggedInUser))
+					JOptionPane.showMessageDialog(null,The_Reader.LoggedInUser.name);
+					if(Database.getInstance().users.get(i).userName.equals(The_Reader.LoggedInUser.userName))
 					{
-						Database.getInstance().users.get(i).followers.add(u);
-						Database.getInstance().addUserFollower(u,Database.getInstance().users.get(i));
+						JOptionPane.showMessageDialog(null,"You Followed "+u.name+" Sucessfully");
+						Database.getInstance().addUserFollower(u, Database.getInstance().users.get(i));
 					}
 				}
 				
-				JOptionPane.showMessageDialog(null,"You Followed "+u.name+" Sucessfully");
+				
 				
 			}
 		});

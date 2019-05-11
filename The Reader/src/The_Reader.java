@@ -76,7 +76,7 @@ public class The_Reader {
 					if(usernametxt.getText().equals(Database.getInstance().users.get(i).userName) && Passwordtxt.getText().equals(Database.getInstance().users.get(i).password))
 							{
 						        LoggedInUser=Database.getInstance().users.get(i);
-						       JOptionPane.showMessageDialog(null, "Logged In Sucessfully !!");
+						      JOptionPane.showMessageDialog(null,"Logged In Successfully");
 						       loggedin=true;
 						       frame.dispose();
 				              UserProfile  sup=new UserProfile(LoggedInUser);

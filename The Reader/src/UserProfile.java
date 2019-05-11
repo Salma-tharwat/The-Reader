@@ -60,10 +60,11 @@ public class UserProfile extends JFrame {
         int h=ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS; 
         JScrollPane jsp=new JScrollPane(panel,v,h);
         jsp.setBounds(reference.getLocation().x, reference.getLocation().y,500, 250);
-    	//JOptionPane.showMessageDialog(null, u.Read_Books.get(0).Name);
+    	JOptionPane.showMessageDialog(null, u.followers.size());
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     	for(int i=0;i<u.followers.size();i++)
     	{
+    		System.out.println(u.followers.size());
     		 JButton Book1 = new JButton(u.followers.get(i).name);
     		    Book1.setOpaque(false);
     			Book1.setContentAreaFilled(false);

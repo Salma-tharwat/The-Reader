@@ -23,5 +23,5 @@ public abstract class AbstractComment {
 		replies.add(reply);
 	}
 
-	public abstract void Notify();
+	public abstract void notify(Notification notification);
 }

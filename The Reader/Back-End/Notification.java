@@ -1,3 +1,4 @@
+import java.awt.SystemColor;
 
 public abstract class Notification {
 	int id;
@@ -19,9 +20,9 @@ public abstract class Notification {
 		this.notificationState = notificationState;
 	}
 	
-	public void getBackGroundColor()
+	public SystemColor getBackGroundColor()
 	{
-		notificationState.getBackGroundColor();
+		return notificationState.getBackGroundColor();
 	}
 	
 	public abstract boolean AddNotification(User user);

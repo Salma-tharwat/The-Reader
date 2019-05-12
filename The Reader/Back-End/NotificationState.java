@@ -1,6 +1,7 @@
+import java.awt.SystemColor;
 
 public interface NotificationState {
-	public void getBackGroundColor();
+	public SystemColor getBackGroundColor();
 	public NotificationState clone();
 	public boolean IsSeen();
 }

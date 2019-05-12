@@ -1,10 +1,10 @@
+import java.awt.SystemColor;
 
 public class NotSeenNotification implements NotificationState {
 
 	@Override
-	public void getBackGroundColor() {
-		// TODO Auto-generated method stub
-		
+	public SystemColor getBackGroundColor() {
+		return SystemColor.inactiveCaption;
 	}
 	
 	@Override

@@ -11,6 +11,7 @@ public class ArticleNotification extends Notification {
 	@Override
 	public void onclick() {
 		View_Article_Window view = new View_Article_Window(new Article());
+		view.setVisible(true);
 	}
 
 	@Override

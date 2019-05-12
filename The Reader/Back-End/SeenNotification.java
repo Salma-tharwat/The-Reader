@@ -1,10 +1,11 @@
+import java.awt.SystemColor;
 
 public class SeenNotification implements NotificationState {
 
 	@Override
-	public void getBackGroundColor() {
+	public SystemColor getBackGroundColor() {
 		// TODO Auto-generated method stub
-		
+		return SystemColor.activeCaption;
 	}
 	
 	@Override

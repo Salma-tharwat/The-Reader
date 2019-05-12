@@ -27,6 +27,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JInternalFrame;
+import java.awt.SystemColor;
 
 public class UserProfile extends JFrame {
 
@@ -255,6 +256,7 @@ public class UserProfile extends JFrame {
 		contentPane.add(btnNewButton_1);
 
 		JButton btnSignout = new JButton("Sign Out");
+		
 		btnSignout.setForeground(Color.DARK_GRAY);
 		btnSignout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -292,15 +294,14 @@ public class UserProfile extends JFrame {
 		    	{
 		    		//System.out.println(u.followers.size());
 		    		 JButton noti1 = new JButton(u.notifications.get(i).message);
-		    		    noti1.setOpaque(false);
-		    			noti1.setContentAreaFilled(false);
-		    			noti1.setBorderPainted(false);
-		    			Notification noti=u.notifications.get(i);
+		    			Notification noti=u.notifications.get(i); 
+		    			noti1.setBackground(noti.getBackGroundColor());
 		    			 noti1.addActionListener(new ActionListener(){  
 		    				 public void actionPerformed(ActionEvent e)
 		    				 {  
+		    					btnNoti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/noti1.png")));
+		    					noti.onclick();
 		    					
-		    					 
 		    		          }  
 		    				 });  
 		    		 panel.add(noti1);

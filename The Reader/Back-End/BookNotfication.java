@@ -11,6 +11,7 @@ public class BookNotfication extends Notification {
 	@Override
 	public void onclick() {
 		View_Book_Window view = new View_Book_Window(book);
+		view.setVisible(true);
 	}
 
 	@Override

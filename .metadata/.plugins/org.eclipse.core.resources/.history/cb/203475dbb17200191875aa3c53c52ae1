@@ -1,7 +1,0 @@
-package snippet;
-
-public class Snippet {
-	Image img= new ImageIcon(this.getClass().getResource("/22.jpg")).getImage();
-			lblNewLabel.setIcon(new ImageIcon(img));
-}
-

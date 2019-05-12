@@ -51,11 +51,7 @@ public class View_Book_Window extends JFrame {
 	 * Create the frame.
 	 */
 	public View_Book_Window(Book b) {
-		System.out.println(b.name);
-		JOptionPane.showMessageDialog(null,b.name);
-		JOptionPane.showMessageDialog(null,b.author);
-		JOptionPane.showMessageDialog(null,b.datePublished);
-		JOptionPane.showMessageDialog(null,b.hyperlink);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 859, 499);
 		contentPane = new JPanel();

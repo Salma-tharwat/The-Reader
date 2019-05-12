@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Color;
+import javax.swing.JButton;
 
 public class Create_Article_Window extends JFrame {
 
@@ -46,6 +47,13 @@ public class Create_Article_Window extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon(img));
 		lblNewLabel.setBounds(0, 0, 247, 106);
 		contentPane.add(lblNewLabel);
+		
+		JButton btn_add = new JButton("New button");
+		btn_add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.jpg")));
+		btn_add.setBorderPainted(false);
+		btn_add.setFocusPainted(false);
+		btn_add.setContentAreaFilled(false);
+		btn_add.setBounds(750, 0, 112, 85);
+		contentPane.add(btn_add);
 	}
-
 }

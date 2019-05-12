@@ -1,9 +1,0 @@
-
-public class PublicationNotification extends Notification
-{
-    Publication publication;
-    public void onclick()
-    {
-    	
-    }
-}

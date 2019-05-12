@@ -12,7 +12,7 @@ public class UserNotification extends Notification {
 	@Override
 	public void onclick() {
 		Database db = Database.getInstance();
-		notificationState = new SeenNotification();
+		notificationState = NotificationStateFactory.getNotification(NotificationStateTypes.seen);
 		db.updateUserNotification(this);
 		View_User_Window view = new View_User_Window(user);
 		view.setVisible(true);

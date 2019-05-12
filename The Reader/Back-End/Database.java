@@ -848,7 +848,6 @@ public class Database {
 
 	public boolean addUserFollower(User followed, User follower) {
 		try {
-			System.out.println(followed.userName + ' ' + follower.userName);
 			String query = "INSERT INTO user_followers (followed_user, following_user) values(?, ?);";
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, followed.userName);

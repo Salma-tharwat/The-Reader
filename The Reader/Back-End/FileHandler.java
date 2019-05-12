@@ -16,6 +16,7 @@ public class FileHandler {
 	            
 	        }catch(IOException ioExp){
 	            ioExp.printStackTrace();
+	            return null;
 	        }
 	        return bArray;
 	}

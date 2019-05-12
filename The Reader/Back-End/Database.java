@@ -38,38 +38,22 @@ public class Database {
 
 		initialize();
 
-		System.out.println("here");
 		users = getAllUsers();
-		System.out.println("here");
 		articles = getAllArticles();
-		System.out.println("here");
 		books = getAllBooks();
-		System.out.println("here");
 		categories = getAllCategories();
-		System.out.println("here");
 		comments = new ArrayList<AbstractComment>();
 		getAllComments();
-		System.out.println("here");
 		notifications = getAllNotifications();
-		System.out.println("here");
 		getArticleCategories();
-		System.out.println("here");
 		getArticleComments();
-		System.out.println("here");
 		getArticleFollowers();
-		System.out.println("here");
 		getBookCategories();
-		System.out.println("here");
 		getBookComments();
-		System.out.println("here");
 		getBookFollowers();
-		System.out.println("here");
 		getBookReaders();
-		System.out.println("here");
 		getUserCategories();
-		System.out.println("here");
 		getUserFollowers();
-		System.out.println("here");
 	}
 
 	private boolean initialize() {
@@ -201,7 +185,7 @@ public class Database {
 		return null;
 	}
 
-	private ArrayList<AbstractComment> getAllComments() {
+	private void getAllComments() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from comment");
@@ -218,7 +202,6 @@ public class Database {
 				System.out.println(writer);
 				User user = getUser(writer);
 				if (reply) {
-					System.out.println("in1");
 					comments.add(new Comment(id, user, content));
 				}
 			}
@@ -227,31 +210,23 @@ public class Database {
 			while (rs.next()) {
 				boolean reply;
 				int id = rs.getInt(1);
-				System.out.println(id);
 				String content = rs.getString(2);
-				System.out.println(content);
 				int parent_id = rs.getInt(3);
-				System.out.println(parent_id);
 				reply = rs.wasNull();
 				String writer = rs.getString(4);
-				System.out.println(writer);
 				User user = getUser(writer);
 				if (!reply)
 				{
-					System.out.println("in2");
 					AbstractComment comment =  getComment(parent_id);
-					if(comment == null)
-						System.out.println("bad");
-					System.out.println("out");
 					Reply r = new Reply(id, user, content, comment); 
 					comments.add(r);
 					comment.replies.add(r);
 				}
 			}
-			return comments;
+			return;
 		} catch (Exception e) {
 			System.out.println(e);
-			return null;
+			return;
 		}
 	}
 
@@ -877,7 +852,7 @@ public class Database {
 
 	public boolean addUserFollower(User followed, User follower) {
 		try {
-
+			System.out.println(followed.userName + ' ' + follower.userName);
 			String query = "INSERT INTO user_followers (followed_user, following_user) values(?, ?);";
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, followed.userName);
@@ -886,7 +861,7 @@ public class Database {
 
 			followed.followers.add(follower);
 			follower.notify(new UserNotification(MessageFormat.format("User {0} followed you", follower.userName),
-					new NotSeenNotification(), follower));
+					new NotSeenNotification(), followed));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);

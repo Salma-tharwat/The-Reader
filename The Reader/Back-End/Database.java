@@ -239,9 +239,9 @@ public class Database {
 				boolean state = rs.getBoolean(3);
 				NotificationState notificationState;
 				if (state)
-					notificationState = new SeenNotification();
+					notificationState = NotificationStateFactory.getNotification(NotificationStateTypes.seen);
 				else
-					notificationState = new NotSeenNotification();
+					notificationState = NotificationStateFactory.getNotification(NotificationStateTypes.notSeen);
 				String userName = rs.getString(4);
 				User user = getUser(userName);
 				int articleId = rs.getInt(5);
@@ -266,9 +266,9 @@ public class Database {
 				boolean state = rs.getBoolean(3);
 				NotificationState notificationState;
 				if (state)
-					notificationState = new SeenNotification();
+					notificationState = NotificationStateFactory.getNotification(NotificationStateTypes.seen);
 				else
-					notificationState = new NotSeenNotification();
+					notificationState = NotificationStateFactory.getNotification(NotificationStateTypes.notSeen);
 				String userName = rs.getString(4);
 				User user = getUser(userName);
 				int bookId = rs.getInt(5);
@@ -293,9 +293,9 @@ public class Database {
 				boolean state = rs.getBoolean(3);
 				NotificationState notificationState;
 				if (state)
-					notificationState = new SeenNotification();
+					notificationState = NotificationStateFactory.getNotification(NotificationStateTypes.seen);
 				else
-					notificationState = new NotSeenNotification();
+					notificationState = NotificationStateFactory.getNotification(NotificationStateTypes.notSeen);
 				String userName = rs.getString(4);
 				User user = getUser(userName);
 				String redirectUserName = rs.getString(5);
@@ -526,7 +526,7 @@ public class Database {
 			article.writer.createdArticles.add(article);
 			article.writer.notifyFollowers(new ArticleNotification(
 					MessageFormat.format("User {0} add article {1}", article.writer.name, article.name),
-					new NotSeenNotification(), article));
+					NotificationStateFactory.getNotification(NotificationStateTypes.notSeen), article));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -546,7 +546,7 @@ public class Database {
 			article.categories.add(category);
 			category.notifyFollowers(new ArticleNotification(
 					MessageFormat.format("Article {0} added to category {1}", article.name, category.name),
-					new NotSeenNotification(), article));
+					NotificationStateFactory.getNotification(NotificationStateTypes.notSeen), article));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -566,7 +566,7 @@ public class Database {
 			article.comments.add(comment);
 			article.notifyFollowers(new ArticleNotification(
 					MessageFormat.format("User {0} commented on article {1}", comment.user.userName, article.name),
-					new NotSeenNotification(), article));
+					NotificationStateFactory.getNotification(NotificationStateTypes.notSeen), article));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -648,7 +648,7 @@ public class Database {
 			book.categories.add(category);
 			category.notifyFollowers(new BookNotfication(
 					MessageFormat.format("New Book {0} added to categeory {1}", book.name, category.name),
-					new NotSeenNotification(), book));
+					NotificationStateFactory.getNotification(NotificationStateTypes.notSeen), book));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -668,7 +668,7 @@ public class Database {
 			book.comments.add(comment);
 			book.notifyFollowers(new BookNotfication(
 					MessageFormat.format("user {0} commented on book {1}", comment.user.userName, book.name),
-					new NotSeenNotification(), book));
+					NotificationStateFactory.getNotification(NotificationStateTypes.notSeen), book));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -729,7 +729,7 @@ public class Database {
 			user.readBooks.add(book);
 			user.notifyFollowers(
 					new BookNotfication(MessageFormat.format("user {0} read new book {1}", user.userName, book.name),
-							new NotSeenNotification(), book));
+							NotificationStateFactory.getNotification(NotificationStateTypes.notSeen), book));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -847,7 +847,7 @@ public class Database {
 
 			followed.followers.add(follower);
 			follower.notify(new UserNotification(MessageFormat.format("User {0} followed you", follower.userName),
-					new NotSeenNotification(), follower));
+					NotificationStateFactory.getNotification(NotificationStateTypes.notSeen), follower));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);

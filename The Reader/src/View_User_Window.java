@@ -72,7 +72,7 @@ public class View_User_Window extends JFrame {
 					if(Database.getInstance().users.get(i).userName.equals(The_Reader.LoggedInUser.userName))
 					{
 						JOptionPane.showMessageDialog(null,"You Followed "+u.name+" Sucessfully");
-						Database.getInstance().addUserFollower(u, Database.getInstance().users.get(i));
+						Database.getInstance().addUserFollower(u, The_Reader.LoggedInUser);
 					}
 				}
 				

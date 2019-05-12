@@ -284,13 +284,39 @@ public class UserProfile extends JFrame {
 		btnNoti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				
+				JPanel panel = new JPanel();
+		    	panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ));
+		    	JFrame f=new JFrame();
+		        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		    	for(int i=0;i<u.notifications.size();i++)
+		    	{
+		    		//System.out.println(u.followers.size());
+		    		 JButton noti1 = new JButton(u.notifications.get(i).message);
+		    		    noti1.setOpaque(false);
+		    			noti1.setContentAreaFilled(false);
+		    			noti1.setBorderPainted(false);
+		    			Notification noti=u.notifications.get(i);
+		    			 noti1.addActionListener(new ActionListener(){  
+		    				 public void actionPerformed(ActionEvent e)
+		    				 {  
+		    					
+		    					 
+		    		          }  
+		    				 });  
+		    		 panel.add(noti1);
+		    		
+		    	}
+		    		f.getContentPane().add(panel);  
+		    	    f.setSize(200, 300);  
+		    		f.setLocationRelativeTo(btnNoti);  
+		    		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  
+		    		f.setVisible(true);  
 			}
 		});
 		boolean notify=false;
 		for(int i=0;i<u.notifications.size();i++)
 		{
-			if(u.notifications.get(i).IsSeen()==true)
+			if(u.notifications.get(i).IsSeen()==false)
 			{
 				btnNoti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/notify2.jpg")));
 				notify=true;

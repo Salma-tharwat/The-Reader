@@ -114,8 +114,9 @@ public class Add_Book extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				Database db = Database.getInstance();
 				Date d=new Date(Integer.parseInt(s1.getValue().toString()),Integer.parseInt(s2.getValue().toString()),Integer.parseInt(s.getValue().toString()));
-				Book b = new Book(0,textField.getText(),d,textField_1.getText(), textField_3.getText(), textArea.getText());
+				Book b = new Book(db.getNextBookId(), textField.getText(),d,textField_1.getText(), textField_3.getText(), textArea.getText());
 				boolean added =Database.getInstance().addBook(b);
 				Database.getInstance().books.add(b);
 				if(added)

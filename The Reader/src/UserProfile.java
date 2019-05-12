@@ -55,6 +55,7 @@ public class UserProfile extends JFrame {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void Display_friends(User u) // function that takes a user and display Names and books of the friends
 	{
+		
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		int v = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
@@ -63,8 +64,13 @@ public class UserProfile extends JFrame {
 		jsp.setBounds(reference.getLocation().x, reference.getLocation().y, 500, 250);
 		JOptionPane.showMessageDialog(null, u.followers.size());
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		for (int i = 0; i < u.followers.size(); i++) {
-			// System.out.println(u.followers.size());
+		JButton result = new JButton("");
+		result.setOpaque(false);
+		result.setContentAreaFilled(false);
+		result.setBorderPainted(false);
+		panel.add(result);
+		for (int i = 0; i < u.followers.size(); i++) 
+		{
 			JButton Book1 = new JButton(u.followers.get(i).name);
 			Book1.setOpaque(false);
 			Book1.setContentAreaFilled(false);
@@ -165,12 +171,7 @@ public class UserProfile extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JLabel lblNewLabel = new JLabel("");
 		Image img = new ImageIcon(this.getClass().getResource("/22.jpg")).getImage();
-		lblNewLabel.setIcon(new ImageIcon(img));
-		lblNewLabel.setBounds(0, 0, 214, 106);
-		contentPane.add(lblNewLabel);
 
 		JButton btnNewButton = new JButton("Home");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -252,7 +253,7 @@ public class UserProfile extends JFrame {
 		btnNewButton_1.setContentAreaFilled(false);
 		btnNewButton_1.setBorderPainted(false);
 		btnNewButton_1.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		btnNewButton_1.setBounds(-16, 227, 204, 42);
+		btnNewButton_1.setBounds(-13, 164, 204, 42);
 		contentPane.add(btnNewButton_1);
 
 		JButton btnSignout = new JButton("Sign Out");
@@ -269,7 +270,7 @@ public class UserProfile extends JFrame {
 		btnSignout.setContentAreaFilled(false);
 		btnSignout.setBorderPainted(false);
 		btnSignout.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		btnSignout.setBounds(23, 280, 123, 39);
+		btnSignout.setBounds(700, 394, 123, 39);
 		contentPane.add(btnSignout);
 
 		JButton btnNewButton_2 = new JButton("Go !");
@@ -289,6 +290,7 @@ public class UserProfile extends JFrame {
 				JPanel panel = new JPanel();
 		    	panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ));
 		    	JFrame f=new JFrame();
+		    	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		    	for(int i=0;i<u.notifications.size();i++)
 		    	{
@@ -300,6 +302,7 @@ public class UserProfile extends JFrame {
 		    				 public void actionPerformed(ActionEvent e)
 		    				 {  
 		    					btnNoti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/noti1.png")));
+		    					btnNoti.setVisible(true);
 		    					noti.onclick();
 		    					
 		    		          }  
@@ -363,7 +366,7 @@ public class UserProfile extends JFrame {
 		btnCreateArticle.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
 		btnCreateArticle.setContentAreaFilled(false);
 		btnCreateArticle.setBorderPainted(false);
-		btnCreateArticle.setBounds(0, 169, 159, 42);
+		btnCreateArticle.setBounds(10, 217, 159, 42);
 		contentPane.add(btnCreateArticle);
 
 		reference = new JButton();
@@ -372,6 +375,25 @@ public class UserProfile extends JFrame {
 		reference.setContentAreaFilled(false);
 		reference.setBounds(297, 169, 70, 23);
 		contentPane.add(reference);
+		
+		JButton My_Articles = new JButton("");
+		My_Articles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				Display_Created_Articles(u);
+			}
+		});
+		My_Articles.setIcon(new javax.swing.ImageIcon(getClass().getResource("/articles.png")));
+		My_Articles.setBorderPainted(false);
+		My_Articles.setFocusPainted(false);
+		My_Articles.setContentAreaFilled(false);
+		My_Articles.setBounds(10, 258, 198, 212);
+		contentPane.add(My_Articles);
+		
+				JLabel lblNewLabel = new JLabel("");
+				lblNewLabel.setIcon(new ImageIcon(img));
+				lblNewLabel.setBounds(0, 0, 214, 106);
+				contentPane.add(lblNewLabel);
 
 	}
 }

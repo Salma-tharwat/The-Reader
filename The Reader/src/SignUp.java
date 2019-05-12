@@ -147,11 +147,6 @@ public class SignUp extends JFrame
           l1.addElement("Grapic Novel");
           l1.addElement("Romance");
           l1.addElement("History");
-        JList<String> list = new JList<>(l1);
-		list.setFont(new Font("Traditional Arabic", Font.PLAIN, 16));
-		list.setBounds(503, 171, 137, 214);
-		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		contentPane.add(list);
 		
 		textField = new JTextField();
 		textField.setFont(new Font("Traditional Arabic", Font.PLAIN, 18));
@@ -174,11 +169,6 @@ public class SignUp extends JFrame
 		passwordField_1.setFont(new Font("Traditional Arabic", Font.PLAIN, 18));
 		passwordField_1.setBounds(194, 324, 214, 29);
 		contentPane.add(passwordField_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Choose Interests:");
-		lblNewLabel_2.setFont(new Font("Traditional Arabic", Font.PLAIN, 22));
-		lblNewLabel_2.setBounds(493, 149, 161, 29);
-		contentPane.add(lblNewLabel_2);
 		
 	}
 }

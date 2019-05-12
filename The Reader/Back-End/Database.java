@@ -780,7 +780,7 @@ public class Database {
 			preparedStatement.executeUpdate();
 			
 			followed.followers.add(follower);
-			follower.notifications.add(new UserNotification(MessageFormat.format("User {0} followed you", follower.userName), new NotSeenNotification(), follower));
+			follower.notify(new UserNotification(MessageFormat.format("User {0} followed you", follower.userName), new NotSeenNotification(), follower));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);

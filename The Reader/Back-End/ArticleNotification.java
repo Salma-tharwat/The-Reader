@@ -15,8 +15,9 @@ public class ArticleNotification extends Notification {
 
 	@Override
 	public Notification clone() {
+		Database db = Database.getInstance();
 		Notification notification = new ArticleNotification(message, notificationState.clone(), article);
-		// TODO : get notfication id from database
+		notification.id = db.getNextNotificationId();
 		return notification;
 	}
 

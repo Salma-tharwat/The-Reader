@@ -73,7 +73,7 @@ public class UserProfile extends JFrame {
 			Book1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 
-					viewFriend_Window up = new viewFriend_Window(u2);
+					View_User_Window up = new View_User_Window(u2);
 					up.setVisible(true);
 					frame.dispose();
 				}

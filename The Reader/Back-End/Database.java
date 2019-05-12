@@ -315,6 +315,7 @@ public class Database {
 				String redirectUserName = rs.getString(5);
 				User redirectUser = getUser(redirectUserName);
 				UserNotification userNotification = new UserNotification(content, notificationState, redirectUser);
+				userNotification.id = id;
 				notifications.add(userNotification);
 				user.notifications.add(userNotification);
 			}
@@ -741,6 +742,7 @@ public class Database {
 			preparedStatement.executeUpdate();
 
 			user.readBooks.add(book);
+			addBookFollower(book, user);
 			user.notifyFollowers(
 					new BookNotfication(MessageFormat.format("user {0} read new book {1}", user.userName, book.name),
 							new NotSeenNotification(), book));

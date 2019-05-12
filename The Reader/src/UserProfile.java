@@ -243,7 +243,7 @@ public class UserProfile extends JFrame {
 				String a = JOptionPane.showInputDialog(null, "Enter Category Name");
 				Category c = Database.getInstance().getCategory(a);
 				boolean followed = Database.getInstance().addUserCategory(The_Reader.LoggedInUser, c);
-				System.out.println(followed);
+				//System.out.println(followed);
 				if (!followed) {
 					JOptionPane.showMessageDialog(null, "Successfully Followed ");
 				}

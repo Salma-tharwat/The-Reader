@@ -63,6 +63,7 @@ public class View_Article_Window extends JFrame {
 		result.setBorderPainted(false);
 		panel.add(result);
 		
+				System.out.println(a.comments.size());
 				for(int j=0;j<a.comments.size();j++)
 				{
 					System.out.println(a.comments.size());

@@ -11,7 +11,7 @@ public class BookNotfication extends Notification {
 	@Override
 	public void onclick() {
 		Database db = Database.getInstance();
-		notificationState = new SeenNotification();
+		notificationState = NotificationStateFactory.getNotification(NotificationStateTypes.seen);
 		db.updateBookNotification(this);
 		View_Book_Window view = new View_Book_Window(book);
 		view.setVisible(true);

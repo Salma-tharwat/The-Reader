@@ -11,7 +11,7 @@ public class ArticleNotification extends Notification {
 	@Override
 	public void onclick() {
 		Database db = Database.getInstance();
-		notificationState = new SeenNotification();
+		notificationState = NotificationStateFactory.getNotification(NotificationStateTypes.seen);
 		db.updateArticleNotification(this);
 		View_Article_Window view = new View_Article_Window(article);
 		view.setVisible(true);

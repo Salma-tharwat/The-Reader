@@ -455,6 +455,12 @@ public class Database {
 		}
 	}
 	
+	public Book getCommentBook(AbstractComment comment) {
+		while (true) {
+			
+		}
+	}
+	
 	public boolean addArticle(Article article) {
 		try {
 			System.out.println("Here");
@@ -733,7 +739,7 @@ public class Database {
 			return false;
 		}
 	}
-
+	
 	public boolean addUser(User user) {
 		try {
 
@@ -854,7 +860,24 @@ public class Database {
 		int maxID = Math.max(a, Math.max(b, c));
 		return maxID + 1;
 	}
-
+	
+	public int getNextCommentId()
+	{
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select max(id) from comnment");
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				id++;
+				return id;
+			}
+			return 1;
+		} catch (Exception e) {
+			System.out.println(e);
+			return 1;
+		}
+	}
+	
 	private int getMaxBookNotification()
 	{
 		try {

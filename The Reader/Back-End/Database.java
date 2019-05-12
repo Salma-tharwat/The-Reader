@@ -893,4 +893,70 @@ public class Database {
 			return 0;
 		}
 	}
+	
+	public boolean updateArticleNotification(User user, ArticleNotification articleNotification) {
+		try {
+
+			String query = "update article_notification set content = ?, state = ?, to_user = ?, article_id = ? where id = ? ;";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, articleNotification.message);
+			if (articleNotification.IsSeen())
+				preparedStatement.setBoolean(2, true);
+			else
+				preparedStatement.setBoolean(2, false);
+			preparedStatement.setString(3, user.userName);
+			preparedStatement.setInt(4, articleNotification.article.id);
+			preparedStatement.setInt(5, articleNotification.id);
+			preparedStatement.executeUpdate();
+			
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+	
+	public boolean updateBookNotification(User user, BookNotfication bookNotification) {
+		try {
+
+			String query = "update book_notification set content = ?, state = ?, to_user = ?, book_id = ? where id = ?;";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, bookNotification.message);
+			if (bookNotification.IsSeen())
+				preparedStatement.setBoolean(2, true);
+			else
+				preparedStatement.setBoolean(2, false);
+			preparedStatement.setString(3, user.userName);
+			preparedStatement.setInt(4, bookNotification.book.id);
+			preparedStatement.setInt(5, bookNotification.id);
+			preparedStatement.executeUpdate();
+			
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+
+	public boolean updateUserNotification(User user, UserNotification userNotification) {
+		try {
+
+			String query = "update user_notification set content = ?, state = ?, to_user = ?, redirect_user = ? where id = ?;";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setString(1, userNotification.message);
+			if (userNotification.IsSeen())
+				preparedStatement.setBoolean(2, true);
+			else
+				preparedStatement.setBoolean(2, false);
+			preparedStatement.setString(3, user.userName);
+			preparedStatement.setString(4, userNotification.user.userName);
+			preparedStatement.setInt(5, userNotification.id);
+			preparedStatement.executeUpdate();
+			
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
 }

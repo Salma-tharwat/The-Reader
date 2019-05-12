@@ -11,6 +11,7 @@ public class UserNotification extends Notification {
 	@Override
 	public void onclick() {
 		View_User_Window view = new View_User_Window(user);
+		view.setVisible(true);
 	}
 
 	@Override

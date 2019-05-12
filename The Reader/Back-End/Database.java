@@ -38,21 +38,38 @@ public class Database {
 
 		initialize();
 
+		System.out.println("here");
 		users = getAllUsers();
+		System.out.println("here");
 		articles = getAllArticles();
+		System.out.println("here");
 		books = getAllBooks();
+		System.out.println("here");
 		categories = getAllCategories();
-		comments = getAllComments();
+		System.out.println("here");
+		comments = new ArrayList<AbstractComment>();
+		getAllComments();
+		System.out.println("here");
 		notifications = getAllNotifications();
+		System.out.println("here");
 		getArticleCategories();
+		System.out.println("here");
 		getArticleComments();
+		System.out.println("here");
 		getArticleFollowers();
+		System.out.println("here");
 		getBookCategories();
+		System.out.println("here");
 		getBookComments();
+		System.out.println("here");
 		getBookFollowers();
+		System.out.println("here");
 		getBookReaders();
+		System.out.println("here");
 		getUserCategories();
+		System.out.println("here");
 		getUserFollowers();
+		System.out.println("here");
 	}
 
 	private boolean initialize() {
@@ -175,6 +192,9 @@ public class Database {
 
 	public AbstractComment getComment(int id) {
 		for (AbstractComment comment : comments) {
+			if(comment == null)
+				System.out.println("soo bad");
+			System.out.println(comment.id + ' ' + id);
 			if (comment.id == id)
 				return comment;
 		}
@@ -183,31 +203,50 @@ public class Database {
 
 	private ArrayList<AbstractComment> getAllComments() {
 		try {
-			ArrayList<AbstractComment> comments = new ArrayList<AbstractComment>();
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from comment");
 			while (rs.next()) {
 				boolean reply;
 				int id = rs.getInt(1);
+				System.out.println(id);
 				String content = rs.getString(2);
+				System.out.println(content);
 				int parent_id = rs.getInt(3);
+				System.out.println(parent_id);
 				reply = rs.wasNull();
 				String writer = rs.getString(4);
+				System.out.println(writer);
 				User user = getUser(writer);
-				if (!reply)
+				if (reply) {
+					System.out.println("in1");
 					comments.add(new Comment(id, user, content));
+				}
 			}
+			stmt = conn.createStatement();
 			rs = stmt.executeQuery("select * from comment");
 			while (rs.next()) {
 				boolean reply;
 				int id = rs.getInt(1);
+				System.out.println(id);
 				String content = rs.getString(2);
+				System.out.println(content);
 				int parent_id = rs.getInt(3);
+				System.out.println(parent_id);
 				reply = rs.wasNull();
 				String writer = rs.getString(4);
+				System.out.println(writer);
 				User user = getUser(writer);
-				if (reply)
-					comments.add(new Reply(id, user, content, getComment(parent_id)));
+				if (!reply)
+				{
+					System.out.println("in2");
+					AbstractComment comment =  getComment(parent_id);
+					if(comment == null)
+						System.out.println("bad");
+					System.out.println("out");
+					Reply r = new Reply(id, user, content, comment); 
+					comments.add(r);
+					comment.replies.add(r);
+				}
 			}
 			return comments;
 		} catch (Exception e) {
@@ -774,7 +813,7 @@ public class Database {
 	public boolean addReply(Reply reply) {
 		try {
 
-			String query = "INSERT INTO comment (id, content, parent_id writer) values(?, ?, ?, ?);";
+			String query = "INSERT INTO comment (id, content, parent_id, writer) values(?, ?, ?, ?);";
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, reply.id);
 			preparedStatement.setString(2, reply.content);
@@ -922,7 +961,7 @@ public class Database {
 	public int getNextCommentId() {
 		try {
 			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select max(id) from comnment");
+			ResultSet rs = stmt.executeQuery("select max(id) from comment");
 			while (rs.next()) {
 				int id = rs.getInt(1);
 				id++;

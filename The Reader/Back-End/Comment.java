@@ -5,6 +5,7 @@ public class Comment extends AbstractComment {
 		super(id, user, content);
 	}
 	
+	
 	@Override
 	public void notify(Notification notification) {
 		user.notify(notification);

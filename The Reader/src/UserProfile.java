@@ -105,13 +105,14 @@ public class UserProfile extends JFrame {
 		for (int i = 0; i < u.createdArticles.size(); i++) {
 
 			JButton article1 = new JButton(u.createdArticles.get(i).name);
+			Article article=u.createdArticles.get(i);
 			article1.setOpaque(false);
 			article1.setContentAreaFilled(false);
 			article1.setBorderPainted(false);
 			article1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					// View_my_Book_Window vb=new View_my_Book_Window (b);
-					// vb.setVisible(true);
+					View_Article_Window vb= new View_Article_Window(article);
+					 vb.setVisible(true);
 				}
 			});
 			panel.add(article1);
@@ -270,7 +271,7 @@ public class UserProfile extends JFrame {
 		btnSignout.setContentAreaFilled(false);
 		btnSignout.setBorderPainted(false);
 		btnSignout.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 20));
-		btnSignout.setBounds(700, 394, 123, 39);
+		btnSignout.setBounds(707, 431, 123, 39);
 		contentPane.add(btnSignout);
 
 		JButton btnNewButton_2 = new JButton("Go !");

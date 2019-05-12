@@ -62,15 +62,13 @@ public class View_Article_Window extends JFrame {
 		result.setContentAreaFilled(false);
 		result.setBorderPainted(false);
 		panel.add(result);
-		for (int i = 0; i < Database.getInstance().articles.size(); i++) {
-			Article current = Database.getInstance().articles.get(i);
-			if (current.equals(a))
-			{
+		
 				for(int j=0;j<a.comments.size();j++)
 				{
+					System.out.println(a.comments.size());
 					Comment c=a.comments.get(j);
-					JButton Comment = new JButton(current.comments.get(j).content);
-					Comment.setFont(new Font("Traditional Arabic", Font.PLAIN | Font.ITALIC, 18));
+					JButton Comment = new JButton(c.content);
+					Comment.setFont(new Font("Traditional Arabic", Font.PLAIN | Font.ITALIC, 16));
 					Comment.setOpaque(false);
 					Comment.setContentAreaFilled(false);
 					Comment.setBorderPainted(false);
@@ -85,15 +83,14 @@ public class View_Article_Window extends JFrame {
 				});
 				    JButton reply= new JButton("Reply");
 				    reply.setFont(new Font("Traditional Arabic", Font.PLAIN | Font.ITALIC, 18));
-					reply.setOpaque(false);
-					reply.setContentAreaFilled(false);
-					reply.setBorderPainted(false);
 				    reply.addActionListener(new ActionListener() 
 					{
 						public void actionPerformed(ActionEvent e) 
 						{
-							String reply=JOptionPane.showInternalInputDialog(null, "reply");
-							c.replies.add(new Comment());
+							Database db = Database.getInstance();
+							String reply=JOptionPane.showInputDialog(null, "reply");
+							Reply newReply = new Reply(db.getNextCommentId(), The_Reader.LoggedInUser, reply, c);
+							db.addReply(newReply);
 							for(int g=0;g<c.replies.size();g++)
 							{
 								JButton Reply2 = new JButton(c.replies.get(g).content);
@@ -102,16 +99,17 @@ public class View_Article_Window extends JFrame {
 								//Reply2.setOpaque(false);
 								//Reply2.setContentAreaFilled(false);
 								//Reply2.setBorderPainted(false);
-							    panel.add(Comment);
+							    panel.add(Reply2);
 							}
 						}
 					});
+				    panel.add(reply);
 				    
 				}
 				
-			}
+			
 
-		}
+		
 		frame.getContentPane().add(jsp);
 		// frame.setSize(500, 250 );
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -206,7 +204,9 @@ public class View_Article_Window extends JFrame {
 			public void actionPerformed(ActionEvent e)
 			{
 				String comment=JOptionPane.showInputDialog(null, "Give Your Comment");
-				db.addArticleComment(a, new Comment());
+				Comment newComment = new Comment(db.getNextCommentId(),The_Reader.LoggedInUser,comment);
+				db.addComment(newComment);
+				db.addArticleComment(a, newComment);
 			}
 		});
 		btnNewButton_1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/commen1.png")));
@@ -222,6 +222,20 @@ public class View_Article_Window extends JFrame {
 		relative.setContentAreaFilled(false);
 		relative.setBounds(67, 286, 89, 23);
 		contentPane.add(relative);
+		
+		JButton btnNewButton_2 = new JButton("");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				Display_Comments(a);
+			}
+		});
+		btnNewButton_2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view2.png")));
+		btnNewButton_2.setBorderPainted(false);
+		btnNewButton_2.setFocusPainted(false);
+		btnNewButton_2.setContentAreaFilled(false);
+		btnNewButton_2.setBounds(636, 120, 82, 75);
+		contentPane.add(btnNewButton_2);
 	}
 
 }

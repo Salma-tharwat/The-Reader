@@ -69,7 +69,6 @@ public class View_User_Window extends JFrame {
 			{
 				for(int i=0;i<Database.getInstance().users.size();i++)
 				{
-					//JOptionPane.showMessageDialog(null,The_Reader.LoggedInUser.name);
 					if(Database.getInstance().users.get(i).userName.equals(The_Reader.LoggedInUser.userName))
 					{
 						JOptionPane.showMessageDialog(null,"You Followed "+u.name+" Sucessfully");
@@ -153,7 +152,6 @@ public class View_User_Window extends JFrame {
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				//JOptionPane.showMessageDialog(null,u.followers.size());
 				JPanel panel = new JPanel();
 		    	panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ));
 		    	JFrame f=new JFrame();
@@ -197,7 +195,6 @@ public class View_User_Window extends JFrame {
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{   
-				//JOptionPane.showMessageDialog(null,u.followers.size());
 				JPanel panel = new JPanel();
 		    	panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ));
 		    	JFrame f=new JFrame();
@@ -242,7 +239,6 @@ public class View_User_Window extends JFrame {
 		button_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				//JOptionPane.showMessageDialog(null,u.followers.size());
 				JPanel panel = new JPanel();
 		    	panel.setLayout( new BoxLayout( panel, BoxLayout.Y_AXIS ));
 		    	JFrame f=new JFrame();

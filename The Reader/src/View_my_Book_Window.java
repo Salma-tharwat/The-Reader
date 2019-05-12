@@ -33,9 +33,7 @@ public class View_my_Book_Window extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Date d=new Date();
-					d.setMonth(2);
-					d.setYear(2010);
+					java.sql.Date d=new java.sql.Date(2, 5, 2010);
 					View_my_Book_Window frame = new View_my_Book_Window (new Book(1, "Champions", d, "Abo Treka", "", "Sports Book"));
 					frame.setVisible(true);
 				} catch (Exception e) {

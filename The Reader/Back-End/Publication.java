@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 public abstract class Publication {
 	int id;

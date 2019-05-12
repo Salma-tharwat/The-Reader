@@ -457,19 +457,28 @@ public class Database {
 	
 	public boolean addArticle(Article article) {
 		try {
-
-			String query = "INSERT INTO article (id, name, date, content, writer) values(?, ?, ?, ?, ?);";
+			System.out.println("Here");
+			if(article.writer == null)
+				System.out.println("sad:(");
+			String query = "INSERT INTO the_reader.article (id, name, date, content, writer) values(?, ?, ?, ?, ?)";
 			preparedStatement = conn.prepareStatement(query);
+			System.out.println("Hi");
 			preparedStatement.setInt(1, article.id);
+			System.out.println("Hi");
 			preparedStatement.setString(2, article.name);
-			preparedStatement.setDate(3, (Date) article.datePublished);
+			System.out.println("Hi");
+			preparedStatement.setDate(3, article.datePublished);
+			System.out.println("Hi");
 			preparedStatement.setBytes(4, article.content);
-			preparedStatement.setString(5, article.Writer.userName);
+			System.out.println("Hi");
+			preparedStatement.setString(5, article.writer.userName);
+			System.out.println("Hi");
 			preparedStatement.executeUpdate();
+			System.out.println("Hi");
 			
 			articles.add(article);
-			article.Writer.createdArticles.add(article);
-			article.Writer.notifyFollowers(new ArticleNotification(MessageFormat.format("User {0} add article {1}", article.Writer.name, article.name), new NotSeenNotification(), article));
+			article.writer.createdArticles.add(article);
+			article.writer.notifyFollowers(new ArticleNotification(MessageFormat.format("User {0} add article {1}", article.writer.name, article.name), new NotSeenNotification(), article));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -562,7 +571,7 @@ public class Database {
 			preparedStatement.setInt(1, book.id);
 			preparedStatement.setString(2, book.author);
 			preparedStatement.setString(3, book.name);
-			preparedStatement.setDate(4, (Date) book.datePublished);
+			preparedStatement.setDate(4, book.datePublished);
 			preparedStatement.setString(5, book.hyperlink);
 			preparedStatement.setString(6, book.description);
 			preparedStatement.executeUpdate();
@@ -823,7 +832,7 @@ public class Database {
 	{
 		try {
 			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("select max(id) from artilce");
+			ResultSet rs = stmt.executeQuery("select max(id) from article");
 			while (rs.next()) {
 				int id = rs.getInt(1);
 				id++;

@@ -1,13 +1,14 @@
-import java.util.Date;
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class Article extends Publication {
 	byte[] content;
-	User Writer;
+	User writer;
 
 	public Article(int id, String name, Date date, User writer, byte[] file) {
 		super(id, name, date);
 		content = file;
+		this.writer = writer;
 	}
 
 	public Article() {

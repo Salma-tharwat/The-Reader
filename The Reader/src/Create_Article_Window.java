@@ -17,6 +17,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -24,7 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
-import java.sql.Date;
+
 import java.awt.event.ActionEvent;
 
 public class Create_Article_Window extends JFrame {
@@ -32,6 +34,7 @@ public class Create_Article_Window extends JFrame {
 	private JPanel contentPane;
 	private JTextField article_name;
 	private JTextField textField;
+	 
 
 	/**
 	 * Launch the application.
@@ -68,17 +71,6 @@ public class Create_Article_Window extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btn_add = new JButton("New button");
-		btn_add.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0)
-			{
-				
-				
-				LocalDateTime now = LocalDateTime.now(); 
-				java.util.Date date=new java.util.Date();  
-				Database db=Database.getInstance();
-				Article article=new Article(db.getNextArticleId(),article_name,date,The_Reader.LoggedInUser,"")
-			}
-		});
 		btn_add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/add.jpg")));
 		btn_add.setBorderPainted(false);
 		btn_add.setFocusPainted(false);
@@ -105,17 +97,12 @@ public class Create_Article_Window extends JFrame {
 		//files.showSaveDialog(null);
 		
 		JButton btn_browse = new JButton("");
-		contentPane.add(btn_browse);
+		contentPane.add(btn_browse); 
+		JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 		btn_browse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
-				 //files.setVisible(true);
-				 JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory()); 
 				  
-		            // set the selection mode to directories only 
-		             
-		            
-		            // resctrict the user to selec files of all types 
 		            j.setAcceptAllFileFilterUsed(false); 
 		  
 		            // set a title for the dialog 
@@ -142,7 +129,23 @@ public class Create_Article_Window extends JFrame {
 		textField.setBounds(157, 288, 337, 27);
 		contentPane.add(textField);
 		textField.setColumns(10);
-		
+		btn_add.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				
+				LocalDateTime now = LocalDateTime.now(); 
+				java.util.Date date=new java.util.Date();
+				java.sql.Date dateSql = new java.sql.Date(date.getDay(),date.getMonth(),date.getYear());
+				Database db=Database.getInstance();
+				Article article=new Article(db.getNextArticleId(),article_name.getText(),dateSql,The_Reader.LoggedInUser, FileHandler.getBytes(j.getSelectedFile().getAbsolutePath()));
+				boolean added=db.addArticle(article);
+				if (added)
+				{
+					JOptionPane.showMessageDialog(null, " Successfully Added");
+				}
+			}
+		});
+	
 		  
 		
 		

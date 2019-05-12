@@ -13,7 +13,7 @@ public class ArticleNotification extends Notification {
 		Database db = Database.getInstance();
 		notificationState = new SeenNotification();
 		db.updateArticleNotification(this);
-		View_Article_Window view = new View_Article_Window(new Article());
+		View_Article_Window view = new View_Article_Window(article);
 		view.setVisible(true);
 	}
 

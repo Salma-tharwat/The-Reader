@@ -108,7 +108,9 @@ public class Create_Article_Window extends JFrame {
 		            // set a title for the dialog 
 		            j.setDialogTitle("Select a .txt file"); 
 		            FileNameExtensionFilter restrict = new FileNameExtensionFilter("Only .txt files", "txt"); 
+		            FileNameExtensionFilter restrict2 = new FileNameExtensionFilter("pdf files", "pdf");
 		            j.addChoosableFileFilter(restrict);
+		            j.addChoosableFileFilter(restrict2);
 		            // invoke the showsOpenDialog function to show the save dialog 
 		            int r = j.showOpenDialog(null); 
 		  

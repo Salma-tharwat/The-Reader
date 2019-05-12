@@ -176,9 +176,6 @@ public class Database {
 
 	public AbstractComment getComment(int id) {
 		for (AbstractComment comment : comments) {
-			if(comment == null)
-				System.out.println("soo bad");
-			System.out.println(comment.id + ' ' + id);
 			if (comment.id == id)
 				return comment;
 		}
@@ -192,11 +189,8 @@ public class Database {
 			while (rs.next()) {
 				boolean reply;
 				int id = rs.getInt(1);
-				System.out.println(id);
 				String content = rs.getString(2);
-				System.out.println(content);
 				int parent_id = rs.getInt(3);
-				System.out.println(parent_id);
 				reply = rs.wasNull();
 				String writer = rs.getString(4);
 				System.out.println(writer);

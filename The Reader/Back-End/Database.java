@@ -894,19 +894,18 @@ public class Database {
 		}
 	}
 	
-	public boolean updateArticleNotification(User user, ArticleNotification articleNotification) {
+	public boolean updateArticleNotification(ArticleNotification articleNotification) {
 		try {
 
-			String query = "update article_notification set content = ?, state = ?, to_user = ?, article_id = ? where id = ? ;";
+			String query = "update article_notification set content = ?, state = ?, article_id = ? where id = ? ;";
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, articleNotification.message);
 			if (articleNotification.IsSeen())
 				preparedStatement.setBoolean(2, true);
 			else
 				preparedStatement.setBoolean(2, false);
-			preparedStatement.setString(3, user.userName);
-			preparedStatement.setInt(4, articleNotification.article.id);
-			preparedStatement.setInt(5, articleNotification.id);
+			preparedStatement.setInt(3, articleNotification.article.id);
+			preparedStatement.setInt(4, articleNotification.id);
 			preparedStatement.executeUpdate();
 			
 			return true;
@@ -916,19 +915,18 @@ public class Database {
 		}
 	}
 	
-	public boolean updateBookNotification(User user, BookNotfication bookNotification) {
+	public boolean updateBookNotification(BookNotfication bookNotification) {
 		try {
 
-			String query = "update book_notification set content = ?, state = ?, to_user = ?, book_id = ? where id = ?;";
+			String query = "update book_notification set content = ?, state = ?, book_id = ? where id = ?;";
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, bookNotification.message);
 			if (bookNotification.IsSeen())
 				preparedStatement.setBoolean(2, true);
 			else
 				preparedStatement.setBoolean(2, false);
-			preparedStatement.setString(3, user.userName);
-			preparedStatement.setInt(4, bookNotification.book.id);
-			preparedStatement.setInt(5, bookNotification.id);
+			preparedStatement.setInt(3, bookNotification.book.id);
+			preparedStatement.setInt(4, bookNotification.id);
 			preparedStatement.executeUpdate();
 			
 			return true;
@@ -938,19 +936,18 @@ public class Database {
 		}
 	}
 
-	public boolean updateUserNotification(User user, UserNotification userNotification) {
+	public boolean updateUserNotification(UserNotification userNotification) {
 		try {
 
-			String query = "update user_notification set content = ?, state = ?, to_user = ?, redirect_user = ? where id = ?;";
+			String query = "update user_notification set content = ?, state = ?, redirect_user = ? where id = ?;";
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, userNotification.message);
 			if (userNotification.IsSeen())
 				preparedStatement.setBoolean(2, true);
 			else
 				preparedStatement.setBoolean(2, false);
-			preparedStatement.setString(3, user.userName);
-			preparedStatement.setString(4, userNotification.user.userName);
-			preparedStatement.setInt(5, userNotification.id);
+			preparedStatement.setString(3, userNotification.user.userName);
+			preparedStatement.setInt(4, userNotification.id);
 			preparedStatement.executeUpdate();
 			
 			return true;

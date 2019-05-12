@@ -158,7 +158,7 @@ public class Database {
 
 	public Category getCategory(String name) {
 		for (Category category : categories) {
-			//System.out.println(category.name);
+			// System.out.println(category.name);
 			if (category.name.equals(name))
 				return category;
 		}
@@ -313,7 +313,7 @@ public class Database {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from article_categories");
-			while(rs.next()) {
+			while (rs.next()) {
 				int articleId = rs.getInt(1);
 				String categoryName = rs.getString(2);
 				Article article = getArticle(articleId);
@@ -329,24 +329,23 @@ public class Database {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from article_comments");
-			while(rs.next()) {
+			while (rs.next()) {
 				int articleId = rs.getInt(1);
 				int commentId = rs.getInt(2);
 				Article article = getArticle(articleId);
 				AbstractComment comment = getComment(commentId);
-				article.comments.add((Comment)comment);
+				article.comments.add((Comment) comment);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
-	
-	
+
 	private void getArticleFollowers() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from article_followers");
-			while(rs.next()) {
+			while (rs.next()) {
 				int articleId = rs.getInt(1);
 				String userName = rs.getString(2);
 				Article article = getArticle(articleId);
@@ -357,12 +356,12 @@ public class Database {
 			System.out.println(e);
 		}
 	}
-	
+
 	private void getBookCategories() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from book_categories");
-			while(rs.next()) {
+			while (rs.next()) {
 				int bookId = rs.getInt(1);
 				String categoryName = rs.getString(2);
 				Book book = getBook(bookId);
@@ -373,28 +372,28 @@ public class Database {
 			System.out.println(e);
 		}
 	}
-	
+
 	private void getBookComments() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from book_comments");
-			while(rs.next()) {
+			while (rs.next()) {
 				int bookId = rs.getInt(1);
 				int commentId = rs.getInt(2);
 				Book book = getBook(bookId);
 				AbstractComment comment = getComment(commentId);
-				book.comments.add((Comment)comment);
+				book.comments.add((Comment) comment);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
-	
+
 	private void getBookFollowers() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from book_followers");
-			while(rs.next()) {
+			while (rs.next()) {
 				int bookId = rs.getInt(1);
 				String userName = rs.getString(2);
 				Book book = getBook(bookId);
@@ -405,12 +404,12 @@ public class Database {
 			System.out.println(e);
 		}
 	}
-	
+
 	private void getBookReaders() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from book_readers");
-			while(rs.next()) {
+			while (rs.next()) {
 				int bookId = rs.getInt(1);
 				String userName = rs.getString(2);
 				Book book = getBook(bookId);
@@ -421,12 +420,12 @@ public class Database {
 			System.out.println(e);
 		}
 	}
-	
+
 	private void getUserCategories() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from user_categories");
-			while(rs.next()) {
+			while (rs.next()) {
 				String userName = rs.getString(1);
 				String categoryName = rs.getString(2);
 				User user = getUser(userName);
@@ -438,12 +437,12 @@ public class Database {
 			System.out.println(e);
 		}
 	}
-	
+
 	private void getUserFollowers() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from user_followers");
-			while(rs.next()) {
+			while (rs.next()) {
 				String followedUserName = rs.getString(1);
 				String followerUserName = rs.getString(2);
 				User followed = getUser(followedUserName);
@@ -454,37 +453,80 @@ public class Database {
 			System.out.println(e);
 		}
 	}
-	
-	public Book getCommentBook(AbstractComment comment) {
+
+	private int getMasterComment(AbstractComment comment) {
+		int currentId = comment.id;
 		while (true) {
-			
+			try {
+				String query = "select * from comment where id = ?;";
+				preparedStatement = conn.prepareStatement(query);
+				preparedStatement.setInt(1, currentId);
+				ResultSet rs = preparedStatement.executeQuery();
+				if (!rs.next())
+					return -1;
+				int newId = rs.getInt(3);
+				if (rs.wasNull())
+					break;
+				currentId = newId;
+			} catch (Exception e) {
+				return -1;
+			}
+		}
+		return currentId;
+	}
+
+	public Book getCommentBook(AbstractComment comment) {
+		int masterCommenttId = getMasterComment(comment);
+		if (masterCommenttId == -1)
+			return null;
+		try {
+			String query = "select * from book book_comments where comment_id = ?;";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, masterCommenttId);
+			ResultSet rs = preparedStatement.executeQuery();
+			if(!rs.next())
+				return null;
+			int bookId = rs.getInt(1);
+			return getBook(bookId);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public Article getCommentArticle(AbstractComment comment) {
+		int masterCommenttId = getMasterComment(comment);
+		if (masterCommenttId == -1)
+			return null;
+		try {
+			String query = "select * from book article_comments where comment_id = ?;";
+			preparedStatement = conn.prepareStatement(query);
+			preparedStatement.setInt(1, masterCommenttId);
+			ResultSet rs = preparedStatement.executeQuery();
+			if(!rs.next())
+				return null;
+			int articleId = rs.getInt(1);
+			return getArticle(articleId);
+		} catch (Exception e) {
+			return null;
 		}
 	}
 	
 	public boolean addArticle(Article article) {
 		try {
-			System.out.println("Here");
-			if(article.writer == null)
-				System.out.println("sad:(");
 			String query = "INSERT INTO the_reader.article (id, name, date, content, writer) values(?, ?, ?, ?, ?)";
 			preparedStatement = conn.prepareStatement(query);
-			System.out.println("Hi");
 			preparedStatement.setInt(1, article.id);
-			System.out.println("Hi");
 			preparedStatement.setString(2, article.name);
-			System.out.println("Hi");
 			preparedStatement.setDate(3, article.datePublished);
-			System.out.println("Hi");
 			preparedStatement.setBytes(4, article.content);
-			System.out.println("Hi");
 			preparedStatement.setString(5, article.writer.userName);
-			System.out.println("Hi");
 			preparedStatement.executeUpdate();
-			System.out.println("Hi");
-			
+
 			articles.add(article);
 			article.writer.createdArticles.add(article);
-			article.writer.notifyFollowers(new ArticleNotification(MessageFormat.format("User {0} add article {1}", article.writer.name, article.name), new NotSeenNotification(), article));
+			article.writer.notifyFollowers(new ArticleNotification(
+					MessageFormat.format("User {0} add article {1}", article.writer.name, article.name),
+					new NotSeenNotification(), article));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -500,27 +542,31 @@ public class Database {
 			preparedStatement.setInt(1, article.id);
 			preparedStatement.setString(2, category.name);
 			preparedStatement.executeUpdate();
-			
+
 			article.categories.add(category);
-			category.notifyFollowers(new ArticleNotification(MessageFormat.format("Article {0} added to category {1}", article.name, category.name), new NotSeenNotification(), article));
+			category.notifyFollowers(new ArticleNotification(
+					MessageFormat.format("Article {0} added to category {1}", article.name, category.name),
+					new NotSeenNotification(), article));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
 		}
 	}
-	
+
 	public boolean addArticleComment(Article article, Comment comment) {
 		try {
-			//TODO: the id should be sequence
+			// TODO: the id should be sequence
 			String query = "INSERT INTO article_comments (article_id, comment_id) values(?, ?);";
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setInt(1, article.id);
 			preparedStatement.setInt(2, comment.id);
 			preparedStatement.executeUpdate();
-			
+
 			article.comments.add(comment);
-			article.notifyFollowers(new ArticleNotification(MessageFormat.format("User {0} commented on article {1}", comment.user.userName, article.name), new NotSeenNotification(), article));
+			article.notifyFollowers(new ArticleNotification(
+					MessageFormat.format("User {0} commented on article {1}", comment.user.userName, article.name),
+					new NotSeenNotification(), article));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -536,7 +582,7 @@ public class Database {
 			preparedStatement.setInt(1, article.id);
 			preparedStatement.setString(2, follower.name);
 			preparedStatement.executeUpdate();
-			
+
 			article.followers.add(follower);
 			return true;
 		} catch (Exception e) {
@@ -559,7 +605,7 @@ public class Database {
 			preparedStatement.setString(4, user.userName);
 			preparedStatement.setInt(5, articleNotification.article.id);
 			preparedStatement.executeUpdate();
-			
+
 			notifications.add(articleNotification);
 			user.notifications.add(articleNotification);
 			return true;
@@ -581,7 +627,7 @@ public class Database {
 			preparedStatement.setString(5, book.hyperlink);
 			preparedStatement.setString(6, book.description);
 			preparedStatement.executeUpdate();
-			
+
 			books.add(book);
 			return true;
 		} catch (Exception e) {
@@ -598,9 +644,11 @@ public class Database {
 			preparedStatement.setInt(1, book.id);
 			preparedStatement.setString(2, category.name);
 			preparedStatement.executeUpdate();
-			
+
 			book.categories.add(category);
-			category.notifyFollowers(new BookNotfication(MessageFormat.format("New Book {0} added to categeory {1}", book.name, category.name), new NotSeenNotification(), book));
+			category.notifyFollowers(new BookNotfication(
+					MessageFormat.format("New Book {0} added to categeory {1}", book.name, category.name),
+					new NotSeenNotification(), book));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -616,9 +664,11 @@ public class Database {
 			preparedStatement.setInt(1, book.id);
 			preparedStatement.setInt(2, comment.id);
 			preparedStatement.executeUpdate();
-			
+
 			book.comments.add(comment);
-			book.notifyFollowers(new BookNotfication(MessageFormat.format("user {0} commented on book {1}", comment.user.userName, book.name), new NotSeenNotification(), book));
+			book.notifyFollowers(new BookNotfication(
+					MessageFormat.format("user {0} commented on book {1}", comment.user.userName, book.name),
+					new NotSeenNotification(), book));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -634,7 +684,7 @@ public class Database {
 			preparedStatement.setInt(1, book.id);
 			preparedStatement.setString(2, user.userName);
 			preparedStatement.executeUpdate();
-			
+
 			book.followers.add(user);
 			return true;
 		} catch (Exception e) {
@@ -657,7 +707,7 @@ public class Database {
 			preparedStatement.setString(4, user.userName);
 			preparedStatement.setInt(5, bookNotification.book.id);
 			preparedStatement.executeUpdate();
-			
+
 			notifications.add(bookNotification);
 			user.notifications.add(bookNotification);
 			return true;
@@ -675,9 +725,11 @@ public class Database {
 			preparedStatement.setInt(1, book.id);
 			preparedStatement.setString(2, user.userName);
 			preparedStatement.executeUpdate();
-			
+
 			user.readBooks.add(book);
-			user.notifyFollowers(new BookNotfication(MessageFormat.format("user {0} read new book {1}", user.userName, book.name), new NotSeenNotification(), book));
+			user.notifyFollowers(
+					new BookNotfication(MessageFormat.format("user {0} read new book {1}", user.userName, book.name),
+							new NotSeenNotification(), book));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -692,7 +744,7 @@ public class Database {
 			preparedStatement = conn.prepareStatement(query);
 			preparedStatement.setString(1, category.name);
 			preparedStatement.executeUpdate();
-			
+
 			categories.add(category);
 			return true;
 		} catch (Exception e) {
@@ -710,7 +762,7 @@ public class Database {
 			preparedStatement.setString(2, comment.content);
 			preparedStatement.setString(3, comment.user.userName);
 			preparedStatement.executeUpdate();
-			
+
 			comments.add(comment);
 			return true;
 		} catch (Exception e) {
@@ -729,17 +781,25 @@ public class Database {
 			preparedStatement.setInt(3, reply.parent.id);
 			preparedStatement.setString(4, reply.user.userName);
 			preparedStatement.executeUpdate();
-			
+
 			comments.add(reply);
 			AbstractComment mainComment = getComment(reply.parent.id);
 			mainComment.replies.add(reply);
+			Book book = getCommentBook(mainComment);
+			Article article = getCommentArticle(mainComment);
+			if(book != null) {
+				mainComment.notify(new BookNotfication(MessageFormat.format("User {0} replied to your comment", reply.user.userName), new NotSeenNotification(), book));
+			}
+			if(article != null) {
+				mainComment.notify(new ArticleNotification(MessageFormat.format("User {0} replied to your comment", reply.user.userName), new NotSeenNotification(), article));
+			}
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
 		}
 	}
-	
+
 	public boolean addUser(User user) {
 		try {
 
@@ -749,7 +809,7 @@ public class Database {
 			preparedStatement.setString(2, user.password);
 			preparedStatement.setString(3, user.name);
 			preparedStatement.executeUpdate();
-			
+
 			users.add(user);
 			return true;
 		} catch (Exception e) {
@@ -766,7 +826,7 @@ public class Database {
 			preparedStatement.setString(1, user.userName);
 			preparedStatement.setString(2, category.name);
 			preparedStatement.executeUpdate();
-			
+
 			category.followers.add(user);
 			user.interests.add(category);
 			return true;
@@ -784,9 +844,10 @@ public class Database {
 			preparedStatement.setString(1, followed.userName);
 			preparedStatement.setString(2, follower.userName);
 			preparedStatement.executeUpdate();
-			
+
 			followed.followers.add(follower);
-			follower.notify(new UserNotification(MessageFormat.format("User {0} followed you", follower.userName), new NotSeenNotification(), follower));
+			follower.notify(new UserNotification(MessageFormat.format("User {0} followed you", follower.userName),
+					new NotSeenNotification(), follower));
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -808,7 +869,7 @@ public class Database {
 			preparedStatement.setString(4, user.userName);
 			preparedStatement.setString(5, userNotification.user.userName);
 			preparedStatement.executeUpdate();
-			
+
 			user.notifications.add(userNotification);
 			return true;
 		} catch (Exception e) {
@@ -816,9 +877,8 @@ public class Database {
 			return false;
 		}
 	}
-	
-	public int getNextBookId()
-	{
+
+	public int getNextBookId() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select max(id) from book");
@@ -833,9 +893,8 @@ public class Database {
 			return 1;
 		}
 	}
-	
-	public int getNextArticleId()
-	{
+
+	public int getNextArticleId() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select max(id) from article");
@@ -850,19 +909,17 @@ public class Database {
 			return 1;
 		}
 	}
-	
-	public int getNextNotificationId()
-	{
+
+	public int getNextNotificationId() {
 		int a = getMaxArticleNotification();
 		int b = getMaxBookNotification();
 		int c = getMaxUserNotification();
-		
+
 		int maxID = Math.max(a, Math.max(b, c));
 		return maxID + 1;
 	}
-	
-	public int getNextCommentId()
-	{
+
+	public int getNextCommentId() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select max(id) from comnment");
@@ -877,9 +934,8 @@ public class Database {
 			return 1;
 		}
 	}
-	
-	private int getMaxBookNotification()
-	{
+
+	private int getMaxBookNotification() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select max(id) from book_notification");
@@ -893,9 +949,8 @@ public class Database {
 			return 0;
 		}
 	}
-	
-	private int getMaxArticleNotification()
-	{
+
+	private int getMaxArticleNotification() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select max(id) from article_notification");
@@ -909,9 +964,8 @@ public class Database {
 			return 0;
 		}
 	}
-	
-	private int getMaxUserNotification()
-	{
+
+	private int getMaxUserNotification() {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select max(id) from user_notification");
@@ -925,7 +979,7 @@ public class Database {
 			return 0;
 		}
 	}
-	
+
 	public boolean updateArticleNotification(ArticleNotification articleNotification) {
 		try {
 
@@ -939,14 +993,14 @@ public class Database {
 			preparedStatement.setInt(3, articleNotification.article.id);
 			preparedStatement.setInt(4, articleNotification.id);
 			preparedStatement.executeUpdate();
-			
+
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
 		}
 	}
-	
+
 	public boolean updateBookNotification(BookNotfication bookNotification) {
 		try {
 
@@ -960,7 +1014,7 @@ public class Database {
 			preparedStatement.setInt(3, bookNotification.book.id);
 			preparedStatement.setInt(4, bookNotification.id);
 			preparedStatement.executeUpdate();
-			
+
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);
@@ -981,7 +1035,7 @@ public class Database {
 			preparedStatement.setString(3, userNotification.user.userName);
 			preparedStatement.setInt(4, userNotification.id);
 			preparedStatement.executeUpdate();
-			
+
 			return true;
 		} catch (Exception e) {
 			System.out.println(e);

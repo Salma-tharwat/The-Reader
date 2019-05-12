@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FileHandler {
@@ -22,7 +23,20 @@ public class FileHandler {
 	}
 	
 	public static boolean writePDF(byte[] content, String folderPath) {
-		//TODO: implement writePDF
-		return false;
+		File file;
+		for(int i = 0; ; i++) {
+			file = new File(folderPath + "\\File" + i + ".pdf");
+			if(file.exists() == false)
+				break;
+		}
+		try {
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(content);
+			fos.close();
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
